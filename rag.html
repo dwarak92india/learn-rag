@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Simple RAG Simulator</title>
+
+<style>
+
+*{
+box-sizing:border-box;
+font-family:Segoe UI,sans-serif;
+}
+
+body{
+margin:0;
+background:#0f172a;
+color:white;
+padding:30px;
+}
+
+h1{
+text-align:center;
+margin-bottom:5px;
+}
+
+p{
+text-align:center;
+color:#94a3b8;
+}
+
+.container{
+max-width:1200px;
+margin:auto;
+}
+
+.card{
+background:#1e293b;
+padding:18px;
+border-radius:12px;
+margin-top:18px;
+border:1px solid #334155;
+}
+
+button{
+padding:12px 18px;
+border:none;
+border-radius:8px;
+background:#3b82f6;
+color:white;
+cursor:pointer;
+margin-top:15px;
+}
+
+button:hover{
+background:#2563eb;
+}
+
+textarea{
+width:100%;
+height:90px;
+margin-top:10px;
+padding:10px;
+background:#111827;
+color:white;
+border:1px solid #475569;
+border-radius:8px;
+}
+
+.flex{
+display:flex;
+gap:10px;
+flex-wrap:wrap;
+margin-top:15px;
+}
+
+.chunk{
+background:#334155;
+padding:10px;
+border-radius:8px;
+width:180px;
+font-size:13px;
+}
+
+.vector{
+background:#064e3b;
+padding:10px;
+border-radius:8px;
+font-size:12px;
+width:200px;
+}
+
+.query{
+background:#7c3aed;
+padding:10px;
+border-radius:8px;
+margin-top:10px;
+}
+
+.good{
+background:#14532d;
+padding:10px;
+margin-top:10px;
+border-radius:8px;
+}
+
+.orange{
+background:#78350f;
+padding:10px;
+margin-top:10px;
+border-radius:8px;
+}
+
+.hidden{
+display:none;
+}
+
+.arrow{
+font-size:30px;
+text-align:center;
+margin:10px;
+color:#60a5fa;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>🧠 RAG Simulator</h1>
+
+<p>Learn Retrieval Augmented Generation step by step</p>
+
+<div class="card">
+
+<h3>Step 1 - Source Documents</h3>
+
+<div class="flex">
+
+<div class="chunk">
+📄 HR Policy
+</div>
+
+<div class="chunk">
+📄 Leave Policy
+</div>
+
+<div class="chunk">
+📄 Employee Handbook
+</div>
+
+</div>
+
+<button onclick="chunkDocs()">Create Knowledge Base</button>
+
+</div>
+
+
+<div id="chunking" class="card hidden">
+
+<h3>Step 2 - Chunking</h3>
+
+<div class="flex" id="chunks"></div>
+
+<button onclick="embed()">Create Embeddings</button>
+
+</div>
+
+
+<div id="embedding" class="card hidden">
+
+<h3>Step 3 - Embedding Model</h3>
+
+<p>
+Each chunk is converted into a semantic vector.
+</p>
+
+<div class="flex" id="vectors"></div>
+
+<button onclick="store()">Store in Vector Database</button>
+
+</div>
+
+
+<div id="vectordb" class="card hidden">
+
+<h3>Step 4 - Vector Database</h3>
+
+<div class="good">
+
+Vector DB now stores semantic meaning.
+
+It DOES NOT understand language.
+
+It only stores vectors and retrieves nearby ones.
+
+</div>
+
+<button onclick="askQuestion()">Ask Question</button>
+
+</div>
+
+
+
+<div id="question" class="card hidden">
+
+<h3>Step 5 - User Question</h3>
+
+<textarea id="query">
+
+I took 10 leave days although only 7 are allowed. What happens?
+
+</textarea>
+
+<button onclick="search()">Search Vector Database</button>
+
+</div>
+
+
+
+<div id="search" class="card hidden">
+
+<h3>Step 6 - Query Embedding</h3>
+
+<div class="query">
+
+Question
+
+↓
+
+Embedding
+
+↓
+
+[0.31, -0.44, 0.78, ...]
+
+</div>
+
+<div class="arrow">↓</div>
+
+<h3>Semantic Search</h3>
+
+<div id="semantic"></div>
+
+<button onclick="bm25()">Compare BM25</button>
+
+</div>
+
+
+
+<div id="bm25" class="card hidden">
+
+<h3>Step 7 - BM25 vs Semantic Search</h3>
+
+<div class="flex">
+
+<div style="flex:1">
+
+<h4>Semantic Search</h4>
+
+<ul>
+
+<li>Leave Policy ✅</li>
+
+<li>Manager Approval ✅</li>
+
+<li>Disciplinary Action ✅</li>
+
+<li>Medical Leave</li>
+
+</ul>
+
+</div>
+
+<div style="flex:1">
+
+<h4>BM25 Search</h4>
+
+<ul>
+
+<li>Annual Leave</li>
+
+<li>Leave</li>
+
+<li>Policy</li>
+
+<li>Employee Leave</li>
+
+</ul>
+
+</div>
+
+</div>
+
+<div class="orange">
+
+Semantic understands meaning.
+
+BM25 matches keywords.
+
+Production RAG often combines BOTH.
+
+</div>
+
+<button onclick="rerank()">Rerank Results</button>
+
+</div>
+
+
+
+<div id="rerank" class="card hidden">
+
+<h3>Step 8 - Reranking</h3>
+
+<h4>Initial Retrieval</h4>
+
+<ol>
+
+<li>Medical Leave</li>
+
+<li>Leave Policy</li>
+
+<li>Manager Approval</li>
+
+<li>Disciplinary Action</li>
+
+</ol>
+
+<div class="arrow">↓</div>
+
+<h4>After Reranking</h4>
+
+<ol>
+
+<li>Leave Policy ⭐</li>
+
+<li>Manager Approval ⭐</li>
+
+<li>Disciplinary Action ⭐</li>
+
+<li>Medical Leave</li>
+
+</ol>
+
+<button onclick="llm()">Send to LLM</button>
+
+</div>
+
+
+
+<div id="llm" class="card hidden">
+
+<h3>Step 9 - Prompt Sent to LLM</h3>
+
+<pre>
+
+Question:
+
+I took 10 leave days although only 7 are allowed.
+
+---------------------------------
+
+Retrieved Chunk 1
+
+Employees receive 7 annual leaves.
+
+---------------------------------
+
+Retrieved Chunk 2
+
+Extra leave requires manager approval.
+
+---------------------------------
+
+Retrieved Chunk 3
+
+Repeated violations may result in disciplinary action.
+
+</pre>
+
+<button onclick="answer()">Generate Answer</button>
+
+</div>
+
+
+
+<div id="answer" class="card hidden">
+
+<h3>🤖 Final LLM Response</h3>
+
+<div class="good">
+
+According to the HR policy:
+
+• Employees are allowed 7 annual leave days.
+
+• Exceeding this limit requires manager approval.
+
+• Repeated unauthorized leave may result in disciplinary action.
+
+The answer is generated by the LLM using the retrieved chunks.
+
+</div>
+
+</div>
+
+</div>
+
+<script>
+
+const chunks=[
+"Employees receive 7 annual leaves.",
+"Unused leave can be carried forward.",
+"Extra leave requires manager approval.",
+"Repeated violations may result in disciplinary action.",
+"Medical leave requires documentation."
+];
+
+function chunkDocs(){
+
+document.getElementById("chunking").classList.remove("hidden");
+
+let html="";
+
+chunks.forEach((c,i)=>{
+
+html+=`<div class="chunk"><b>Chunk ${i+1}</b><br><br>${c}</div>`;
+
+});
+
+document.getElementById("chunks").innerHTML=html;
+
+}
+
+function embed(){
+
+document.getElementById("embedding").classList.remove("hidden");
+
+let html="";
+
+chunks.forEach((c,i)=>{
+
+let a=Math.random().toFixed(2);
+let b=Math.random().toFixed(2);
+let d=Math.random().toFixed(2);
+
+html+=`
+
+<div class="vector">
+
+<b>Chunk ${i+1}</b>
+
+<br><br>
+
+${c}
+
+<hr>
+
+Embedding
+
+<br>
+
+[${a}, ${b}, ${d}, ...]
+
+</div>
+
+`;
+
+});
+
+document.getElementById("vectors").innerHTML=html;
+
+}
+
+function store(){
+
+document.getElementById("vectordb").classList.remove("hidden");
+
+}
+
+function askQuestion(){
+
+document.getElementById("question").classList.remove("hidden");
+
+}
+
+function search(){
+
+document.getElementById("search").classList.remove("hidden");
+
+document.getElementById("semantic").innerHTML=`
+
+<ol>
+
+<li>Leave Policy (Similarity 0.97)</li>
+
+<li>Manager Approval (0.93)</li>
+
+<li>Disciplinary Action (0.88)</li>
+
+<li>Medical Leave (0.62)</li>
+
+</ol>
+
+`;
+
+}
+
+function bm25(){
+
+document.getElementById("bm25").classList.remove("hidden");
+
+}
+
+function rerank(){
+
+document.getElementById("rerank").classList.remove("hidden");
+
+}
+
+function llm(){
+
+document.getElementById("llm").classList.remove("hidden");
+
+}
+
+function answer(){
+
+document.getElementById("answer").classList.remove("hidden");
+
+}
+
+</script>
+
+</body>
+</html>
