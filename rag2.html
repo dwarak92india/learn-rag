@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RAG Simulator • Visual Learning</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap');
+        
+        :root {
+            --primary: 59 130 246;
+        }
+        
+        body {
+            font-family: 'Inter', system_ui, sans-serif;
+        }
+        
+        .title-font {
+            font-family: 'Space Grotesk', sans-serif;
+        }
+
+        .doc-card {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .doc-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+        }
+
+        .vector-bar {
+            height: 6px;
+            background: linear-gradient(90deg, rgb(59 130 246), rgb(147 51 234));
+            transition: width 1.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .step-circle {
+            transition: all 0.4s ease;
+        }
+
+        .highlight {
+            animation: highlight 1.5s ease-in-out;
+        }
+
+        @keyframes highlight {
+            0% { background-color: rgb(234 179 8 / 0.3); }
+            100% { background-color: transparent; }
+        }
+
+        .terminal {
+            font-family: ui-monospace, monospace;
+            background: #0f172a;
+        }
+    </style>
+</head>
+<body class="bg-zinc-950 text-white">
+    <div class="max-w-7xl mx-auto">
+        <!-- Header -->
+        <div class="border-b border-zinc-800 bg-zinc-900 py-6 px-8 flex items-center justify-between">
+            <div class="flex items-center gap-4">
+                <div class="w-10 h-10 bg-blue-600 rounded-2xl flex items-center justify-center text-2xl">🔍</div>
+                <div>
+                    <h1 class="title-font text-4xl font-semibold tracking-tighter">RAG Simulator</h1>
+                    <p class="text-zinc-400 text-sm">Visual Interactive Learning</p>
+                </div>
+            </div>
+            <div class="flex items-center gap-6 text-sm">
+                <a href="#" onclick="resetSimulator()" 
+                   class="flex items-center gap-2 px-5 py-2.5 bg-zinc-800 hover:bg-zinc-700 rounded-2xl transition-colors">
+                    <i class="fa-solid fa-rotate"></i>
+                    <span>Reset</span>
+                </a>
+                <div class="flex items-center gap-2 px-4 py-2 bg-emerald-950 text-emerald-400 rounded-3xl text-xs font-medium">
+                    <div class="w-2 h-2 bg-emerald-400 rounded-full animate-pulse"></div>
+                    LIVE DEMO
+                </div>
+            </div>
+        </div>
+
+        <div class="flex h-[calc(100vh-88px)]">
+            <!-- Knowledge Base Sidebar -->
+            <div class="w-80 border-r border-zinc-800 bg-zinc-900 p-6 overflow-auto">
+                <div class="flex items-center justify-between mb-6">
+                    <h2 class="text-lg font-semibold flex items-center gap-2">
+                        <i class="fa-solid fa-book"></i>
+                        Knowledge Base
+                    </h2>
+                    <span class="text-xs bg-zinc-800 px-3 py-1 rounded-full">8 Documents</span>
+                </div>
+                
+                <div id="knowledge-base" class="space-y-3">
+                    <!-- Populated by JS -->
+                </div>
+
+                <div class="mt-8 pt-6 border-t border-zinc-800">
+                    <div class="text-xs uppercase tracking-widest text-zinc-500 mb-3">How RAG Works</div>
+                    <div class="space-y-6 text-xs leading-relaxed text-zinc-400">
+                        <div>
+                            <div class="font-mono text-blue-400 mb-1">1. RETRIEVAL</div>
+                            <p>Find relevant chunks using vector similarity (cosine)</p>
+                        </div>
+                        <div>
+                            <div class="font-mono text-purple-400 mb-1">2. AUGMENTATION</div>
+                            <p>Stuff retrieved context into LLM prompt</p>
+                        </div>
+                        <div>
+                            <div class="font-mono text-emerald-400 mb-1">3. GENERATION</div>
+                            <p>LLM generates grounded answer</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Main Simulator -->
+            <div class="flex-1 flex flex-col">
+                <!-- Query Area -->
+                <div class="p-8 border-b border-zinc-800 bg-zinc-900">
+                    <div class="max-w-2xl mx-auto">
+                        <div class="flex items-center gap-3 mb-4">
+                            <i class="fa-solid fa-question-circle text-amber-400"></i>
+                            <h3 class="font-medium">Ask anything about AI</h3>
+                        </div>
+                        
+                        <div class="relative">
+                            <input id="query-input" 
+                                   type="text" 
+                                   placeholder="What is Retrieval-Augmented Generation?"
+                                   class="w-full bg-zinc-800 border border-zinc-700 focus:border-blue-500 rounded-3xl px-7 py-6 text-lg outline-none transition-all">
+                            <button onclick="runRAG()"
+                                    class="absolute right-3 top-1/2 -translate-y-1/2 bg-blue-600 hover:bg-blue-500 transition-colors px-8 py-4 rounded-3xl font-medium flex items-center gap-2">
+                                <i class="fa-solid fa-paper-plane"></i>
+                                <span>Run RAG</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Pipeline Visualization -->
+                <div class="flex-1 p-8 overflow-auto bg-zinc-950">
+                    <div class="max-w-4xl mx-auto">
+                        <!-- Steps -->
+                        <div class="flex justify-between items-center mb-12 relative">
+                            <div onclick="highlightStep(1)" id="step1" 
+                                 class="step-circle cursor-pointer w-12 h-12 bg-zinc-800 hover:bg-blue-900 border-2 border-blue-500 rounded-2xl flex items-center justify-center text-xl font-bold">1</div>
+                            <div class="flex-1 h-0.5 bg-gradient-to-r from-blue-500 to-purple-500 mx-4"></div>
+                            <div onclick="highlightStep(2)" id="step2" 
+                                 class="step-circle cursor-pointer w-12 h-12 bg-zinc-800 hover:bg-purple-900 border-2 border-purple-500 rounded-2xl flex items-center justify-center text-xl font-bold">2</div>
+                            <div class="flex-1 h-0.5 bg-gradient-to-r from-purple-500 to-emerald-500 mx-4"></div>
+                            <div onclick="highlightStep(3)" id="step3" 
+                                 class="step-circle cursor-pointer w-12 h-12 bg-zinc-800 hover:bg-emerald-900 border-2 border-emerald-500 rounded-2xl flex items-center justify-center text-xl font-bold">3</div>
+                            
+                            <div class="absolute text-[10px] font-mono tracking-widest text-center w-full top-14 flex justify-between px-6 text-zinc-500">
+                                <div>RETRIEVE</div>
+                                <div>AUGMENT</div>
+                                <div>GENERATE</div>
+                            </div>
+                        </div>
+
+                        <!-- Results Container -->
+                        <div id="results" class="space-y-8 hidden">
+                            <!-- Retrieval Section -->
+                            <div class="bg-zinc-900 rounded-3xl p-6 border border-zinc-700">
+                                <div class="flex items-center gap-3 mb-6">
+                                    <div class="px-4 py-1 bg-blue-900/50 text-blue-400 text-xs font-mono rounded-2xl">STEP 1 — RETRIEVAL</div>
+                                </div>
+                                
+                                <div class="grid grid-cols-2 gap-6">
+                                    <!-- Query Embedding -->
+                                    <div>
+                                        <div class="text-xs uppercase text-zinc-500 mb-2">Query Embedding</div>
+                                        <div id="query-vector" class="terminal p-4 rounded-2xl text-xs text-emerald-300 h-28 overflow-hidden font-light"></div>
+                                    </div>
+                                    
+                                    <!-- Retrieved Docs -->
+                                    <div>
+                                        <div class="flex justify-between text-xs uppercase text-zinc-500 mb-2">
+                                            <div>Top Retrieved Documents</div>
+                                            <div class="text-emerald-400 font-medium">Similarity ↑</div>
+                                        </div>
+                                        <div id="retrieved-docs" class="space-y-3"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Augmentation -->
+                            <div class="bg-zinc-900 rounded-3xl p-6 border border-zinc-700">
+                                <div class="flex items-center gap-3 mb-6">
+                                    <div class="px-4 py-1 bg-purple-900/50 text-purple-400 text-xs font-mono rounded-2xl">STEP 2 — AUGMENTATION</div>
+                                </div>
+                                <div class="terminal p-5 rounded-2xl text-sm leading-relaxed text-zinc-300 max-h-64 overflow-auto" id="augmented-prompt"></div>
+                            </div>
+
+                            <!-- Generation -->
+                            <div class="bg-zinc-900 rounded-3xl p-6 border border-zinc-700">
+                                <div class="flex items-center gap-3 mb-6">
+                                    <div class="px-4 py-1 bg-emerald-900/50 text-emerald-400 text-xs font-mono rounded-2xl">STEP 3 — GENERATION</div>
+                                </div>
+                                <div class="flex items-center gap-3 mb-4">
+                                    <div class="text-emerald-400">
+                                        <i class="fa-solid fa-sparkles"></i>
+                                    </div>
+                                    <div class="font-medium">Final Answer</div>
+                                </div>
+                                <div id="generated-answer" class="prose prose-invert max-w-none text-zinc-200 leading-relaxed"></div>
+                            </div>
+                        </div>
+
+                        <!-- Empty State -->
+                        <div id="empty-state" class="h-full flex flex-col items-center justify-center text-center py-20">
+                            <div class="text-7xl mb-6 opacity-40">🔎</div>
+                            <h3 class="text-2xl font-medium mb-2 text-zinc-300">Ready to simulate RAG?</h3>
+                            <p class="max-w-sm text-zinc-400">Type a question above and watch how retrieval, augmentation, and generation work together.</p>
+                            
+                            <div class="mt-12 grid grid-cols-3 gap-8 text-left max-w-lg">
+                                <div class="text-xs">
+                                    <div class="font-mono text-blue-400 mb-1">EXAMPLE QUERIES</div>
+                                    <div onclick="useExampleQuery(this)" class="cursor-pointer hover:text-blue-400 transition-colors p-2 rounded-xl">What are the benefits of RAG?</div>
+                                    <div onclick="useExampleQuery(this)" class="cursor-pointer hover:text-blue-400 transition-colors p-2 rounded-xl">How does vector search work?</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Footer Status -->
+                <div class="h-14 border-t border-zinc-800 bg-zinc-900 px-8 flex items-center text-xs text-zinc-500 font-mono">
+                    <div class="flex-1 flex items-center gap-6">
+                        <div>Demo by Grok • For educational purposes</div>
+                        <div class="h-3 w-px bg-zinc-700"></div>
+                        <div onclick="showInfo()" class="hover:text-zinc-300 cursor-pointer flex items-center gap-1">
+                            <i class="fa-solid fa-info-circle"></i>
+                            <span>Learn more about RAG</span>
+                        </div>
+                    </div>
+                    <div id="status" class="text-emerald-400"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Info Modal -->
+    <div id="info-modal" class="hidden fixed inset-0 bg-black/80 flex items-center justify-center z-50">
+        <div class="bg-zinc-900 max-w-lg w-full mx-4 rounded-3xl p-8">
+            <h2 class="text-2xl font-semibold mb-6">Understanding RAG</h2>
+            <div class="space-y-6 text-sm">
+                <p class="text-zinc-300">
+                    <strong>Retrieval-Augmented Generation</strong> is a technique that combines the power of retrieval systems with generative LLMs.
+                </p>
+                <div class="bg-zinc-800 rounded-2xl p-5 text-xs">
+                    <div class="font-mono mb-2 text-blue-400">WHY RAG?</div>
+                    <ul class="list-disc pl-5 space-y-2 text-zinc-400">
+                        <li>Reduces hallucinations</li>
+                        <li>Provides up-to-date information</li>
+                        <li>Grounds answers in real documents</li>
+                        <li>Cost-effective compared to fine-tuning</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="mt-8 flex justify-end">
+                <button onclick="hideInfo()" 
+                        class="px-8 py-3 bg-white text-black font-medium rounded-2xl">Got it, thanks!</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Sample Knowledge Base
+        const knowledgeBase = [
+            {
+                id: 1,
+                title: "Introduction to RAG",
+                content: "Retrieval-Augmented Generation (RAG) is an AI framework that improves the quality of responses generated by large language models by retrieving relevant information from a knowledge base before generating an answer.",
+                vector: [0.91, 0.45, 0.78]
+            },
+            {
+                id: 2,
+                title: "Vector Embeddings",
+                content: "Embeddings are numerical representations of text in high-dimensional space. Similar texts have vectors that are close to each other when measured by cosine similarity.",
+                vector: [0.88, 0.62, 0.71]
+            },
+            {
+                id: 3,
+                title: "Cosine Similarity",
+                content: "Cosine similarity measures the cosine of the angle between two vectors. A value of 1 means the vectors are identical in direction.",
+                vector: [0.65, 0.91, 0.55]
+            },
+            {
+                id: 4,
+                title: "Benefits of RAG",
+                content: "RAG reduces hallucination, allows models to access proprietary data, and keeps knowledge current without expensive retraining.",
+                vector: [0.95, 0.38, 0.82]
+            },
+            {
+                id: 5,
+                title: "LLM Limitations",
+                content: "Large Language Models have fixed knowledge cutoffs and can hallucinate facts when uncertain.",
+                vector: [0.42, 0.75, 0.68]
+            },
+            {
+                id: 6,
+                title: "Chunking Strategy",
+                content: "Documents are broken into smaller overlapping chunks to improve retrieval relevance and fit within context windows.",
+                vector: [0.71, 0.59, 0.88]
+            }
+        ]
+
+        function renderKnowledgeBase() {
+            const container = document.getElementById('knowledge-base')
+            container.innerHTML = ''
+            
+            knowledgeBase.forEach(doc => {
+                const div = document.createElement('div')
+                div.className = `doc-card bg-zinc-800 border border-zinc-700 rounded-2xl p-4 cursor-pointer hover:border-blue-500`
+                div.innerHTML = `
+                    <div class="font-medium text-sm mb-1">${doc.title}</div>
+                    <div class="text-xs text-zinc-400 line-clamp-2">${doc.content.substring(0, 110)}...</div>
+                `
+                container.appendChild(div)
+            })
+        }
+
+        function cosineSimilarity(vecA, vecB) {
+            let dot = 0, magA = 0, magB = 0
+            for (let i = 0; i < vecA.length; i++) {
+                dot += vecA[i] * vecB[i]
+                magA += vecA[i] * vecA[i]
+                magB += vecB[i] * vecB[i]
+            }
+            return dot / (Math.sqrt(magA) * Math.sqrt(magB))
+        }
+
+        function fakeEmbed(text) {
+            // Very fake embedding based on text length + hash
+            const seed = text.split('').reduce((a, c) => a + c.charCodeAt(0), 0)
+            return [
+                (Math.sin(seed) + 1) / 2,
+                (Math.cos(seed * 1.3) + 1) / 2,
+                (Math.sin(seed * 0.7) + 1) / 2
+            ]
+        }
+
+        function runRAG() {
+            const query = document.getElementById('query-input').value.trim()
+            if (!query) {
+                alert("Please enter a question!")
+                return
+            }
+
+            document.getElementById('empty-state').classList.add('hidden')
+            document.getElementById('results').classList.remove('hidden')
+
+            const queryVec = fakeEmbed(query)
+            
+            // Show query vector
+            document.getElementById('query-vector').innerHTML = `
+                Query: <span class="text-amber-300">${query}</span><br><br>
+                Vector: [${queryVec.map(v => v.toFixed(2)).join(', ')}]
+            `
+
+            // Retrieve
+            const scored = knowledgeBase.map(doc => {
+                const score = cosineSimilarity(queryVec, doc.vector)
+                return { ...doc, score }
+            }).sort((a, b) => b.score - a.score).slice(0, 3)
+
+            // Render retrieved
+            const retrievedHTML = scored.map((doc, index) => `
+                <div class="bg-zinc-800 border border-zinc-700 rounded-2xl p-4 highlight" style="animation-delay: ${index * 200}ms">
+                    <div class="flex justify-between items-start">
+                        <div class="font-medium text-sm">${doc.title}</div>
+                        <div class="text-xs bg-emerald-900 text-emerald-400 px-3 py-0.5 rounded-2xl font-mono">${(doc.score * 100).toFixed(0)}%</div>
+                    </div>
+                    <div class="text-xs text-zinc-400 mt-2 line-clamp-3">${doc.content}</div>
+                </div>
+            `).join('')
+            
+            document.getElementById('retrieved-docs').innerHTML = retrievedHTML
+
+            // Augmented prompt
+            let context = scored.map(d => d.content).join('\n\n')
+            const prompt = `Context:\n${context}\n\nQuestion: ${query}\n\nAnswer based only on the context above:`
+            
+            document.getElementById('augmented-prompt').innerHTML = `<span class="text-purple-300">Context:</span><br>${context.replace(/\n/g, '<br>')}<br><br><span class="text-amber-300">Question:</span> ${query}`
+
+            // Generate fake answer
+            let answer = `Based on the retrieved context, `
+            
+            if (query.toLowerCase().includes('rag') || query.toLowerCase().includes('retrieval')) {
+                answer += "Retrieval-Augmented Generation (RAG) enhances LLMs by first retrieving relevant documents from a knowledge base and then using that information to generate more accurate, grounded responses. This significantly reduces hallucinations."
+            } else if (query.toLowerCase().includes('vector') || query.toLowerCase().includes('embedding')) {
+                answer += "Vector embeddings convert text into numbers so that machines can understand semantic similarity. Documents with similar meanings end up close together in vector space."
+            } else {
+                answer += "the key insight is that combining retrieval with generation produces better answers than using the LLM alone."
+            }
+            
+            document.getElementById('generated-answer').innerHTML = `
+                <div class="italic text-zinc-100">${answer}</div>
+                <div class="mt-8 text-[10px] text-zinc-500 flex items-center gap-2">
+                    <i class="fa-solid fa-check-circle"></i>
+                    Grounded in retrieved documents • Simulated LLM response
+                </div>
+            `
+
+            // Update status
+            document.getElementById('status').innerHTML = `✅ RAG pipeline completed in <span class="font-medium">1.4s</span>`
+            
+            // Animate steps
+            setTimeout(() => highlightStep(1), 200)
+            setTimeout(() => highlightStep(2), 1200)
+            setTimeout(() => highlightStep(3), 2200)
+        }
+
+        function highlightStep(n) {
+            for (let i = 1; i <= 3; i++) {
+                const el = document.getElementById(`step${i}`)
+                if (i === n) {
+                    el.classList.add('!bg-blue-600', 'scale-110')
+                } else {
+                    el.classList.remove('!bg-blue-600', 'scale-110')
+                }
+            }
+        }
+
+        function useExampleQuery(el) {
+            document.getElementById('query-input').value = el.textContent.trim()
+            runRAG()
+        }
+
+        function resetSimulator() {
+            document.getElementById('query-input').value = ''
+            document.getElementById('results').classList.add('hidden')
+            document.getElementById('empty-state').classList.remove('hidden')
+            document.getElementById('status').innerHTML = ''
+        }
+
+        function showInfo() {
+            document.getElementById('info-modal').classList.remove('hidden')
+        }
+        
+        function hideInfo() {
+            document.getElementById('info-modal').classList.add('hidden')
+        }
+
+        // Initialize
+        window.onload = function() {
+            renderKnowledgeBase()
+            
+            // Tailwind script already loaded via CDN
+            console.log('%cRAG Simulator ready for learning!', 'color: #3b82f6; font-family: monospace')
+            
+            // Demo query after a delay
+            setTimeout(() => {
+                if (document.getElementById('query-input').value === '') {
+                    document.getElementById('query-input').value = "What are the benefits of using RAG?"
+                }
+            }, 1400)
+        }
+    </script>
+</body>
+</html>
