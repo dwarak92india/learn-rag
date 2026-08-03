@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ashwagandha Knowledge Graph | Simulated Layer-1 MOAT</title>
+  
+  <!-- vis-network for interactive graph -->
+  <script src="https://unpkg.com/vis-network@9.1.6/standalone/umd/vis-network.min.js"></script>
+  
+  <style>
+    :root {
+      --bg: #0f172a;
+      --card: #1e293b;
+      --text: #e2e8f0;
+      --muted: #94a3b8;
+      --accent: #38bdf8;
+      --border: #334155;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+      min-height: 100vh;
+    }
+
+    header {
+      background: linear-gradient(90deg, #0f172a, #1e293b);
+      border-bottom: 1px solid var(--border);
+      padding: 1.25rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    header h1 {
+      font-size: 1.4rem;
+      font-weight: 600;
+      color: #f8fafc;
+    }
+
+    header p {
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .badge {
+      background: #0369a1;
+      color: white;
+      font-size: 0.75rem;
+      padding: 0.25rem 0.7rem;
+      border-radius: 999px;
+      font-weight: 500;
+    }
+
+    .container {
+      display: grid;
+      grid-template-columns: 1fr 340px;
+      height: calc(100vh - 80px);
+    }
+
+    #network {
+      width: 100%;
+      height: 100%;
+      background: #0f172a;
+      border-right: 1px solid var(--border);
+    }
+
+    #details {
+      background: var(--card);
+      padding: 1.5rem;
+      overflow-y: auto;
+      border-left: 1px solid var(--border);
+    }
+
+    #details h2 {
+      font-size: 1.15rem;
+      margin-bottom: 0.75rem;
+      color: var(--accent);
+    }
+
+    #details .meta {
+      font-size: 0.85rem;
+      color: var(--muted);
+      margin-bottom: 1rem;
+    }
+
+    #details .section {
+      margin-top: 1.25rem;
+    }
+
+    #details .section h3 {
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--muted);
+      margin-bottom: 0.4rem;
+    }
+
+    #details ul {
+      padding-left: 1.1rem;
+      font-size: 0.92rem;
+    }
+
+    #details li {
+      margin-bottom: 0.35rem;
+    }
+
+    .legend {
+      position: absolute;
+      bottom: 20px;
+      left: 20px;
+      background: rgba(30, 41, 59, 0.92);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 12px 16px;
+      font-size: 0.8rem;
+      z-index: 10;
+      backdrop-filter: blur(8px);
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin: 4px 0;
+    }
+
+    .dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+    }
+
+    .placeholder {
+      color: var(--muted);
+      font-style: italic;
+      padding-top: 2rem;
+      text-align: center;
+    }
+
+    @media (max-width: 900px) {
+      .container {
+        grid-template-columns: 1fr;
+        grid-template-rows: 60vh 40vh;
+      }
+      #network { border-right: none; border-bottom: 1px solid var(--border); }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div>
+      <h1>Ashwagandha Knowledge Graph</h1>
+      <p>Simulated Layer-1 MOAT • Botanical Source → Extract Forms → Evidence → Regulation</p>
+    </div>
+    <div class="badge">Public Data Simulation</div>
+  </header>
+
+  <div class="container">
+    <div id="network"></div>
+    
+    <div id="details">
+      <div class="placeholder" id="placeholder">
+        Click any node to explore its details and relationships.<br><br>
+        This graph demonstrates how a structured Knowledge Graph creates precise distinctions that generic text search cannot.
+      </div>
+      
+      <div id="content" style="display:none;">
+        <h2 id="node-title"></h2>
+        <div class="meta" id="node-type"></div>
+        <div id="node-description"></div>
+        
+        <div class="section">
+          <h3>Key Relationships</h3>
+          <ul id="node-relations"></ul>
+        </div>
+        
+        <div class="section">
+          <h3>Why this matters for the MOAT</h3>
+          <p id="node-moat" style="font-size:0.9rem; color:#cbd5e1;"></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="legend">
+    <div class="legend-item"><div class="dot" style="background:#22c55e"></div> Species / Taxonomy</div>
+    <div class="legend-item"><div class="dot" style="background:#f59e0b"></div> Plant Part</div>
+    <div class="legend-item"><div class="dot" style="background:#3b82f6"></div> Extract Form</div>
+    <div class="legend-item"><div class="dot" style="background:#14b8a6"></div> Marker / Bioactive</div>
+    <div class="legend-item"><div class="dot" style="background:#eab308"></div> Clinical Evidence</div>
+    <div class="legend-item"><div class="dot" style="background:#ef4444"></div> Regulatory</div>
+    <div class="legend-item"><div class="dot" style="background:#a78bfa"></div> Indication</div>
+  </div>
+
+  <script>
+    // ====================== NODES ======================
+    const nodes = new vis.DataSet([
+      // Taxonomy
+      { id: 1,  label: "Withania somnifera\n(L.) Dunal", group: "species", title: "Accepted scientific name" },
+      { id: 2,  label: "Physalis somnifera\n(synonym)", group: "species", title: "Basionym / synonym" },
+
+      // Plant Parts
+      { id: 3,  label: "Root", group: "part", title: "Dried mature roots" },
+      { id: 4,  label: "Leaf", group: "part", title: "Leaves" },
+
+      // Extract Forms
+      { id: 5,  label: "KSM-66", group: "extract", title: "Root-only extract ≥5% withanolides" },
+      { id: 6,  label: "Sensoril", group: "extract", title: "Root + Leaf extract" },
+      { id: 7,  label: "Shoden", group: "extract", title: "High-potency root + leaf" },
+      { id: 8,  label: "Generic Root\nExtract", group: "extract", title: "Variable standardization" },
+
+      // Markers
+      { id: 9,  label: "Total\nWithanolides", group: "marker", title: "Main marker class" },
+      { id: 10, label: "Withaferin A", group: "marker", title: "Higher in leaves" },
+      { id: 11, label: "Withanolide A", group: "marker", title: "Key root marker" },
+
+      // Evidence
+      { id: 12, label: "Chandrasekhar\n2012 (RCT)", group: "evidence", title: "Landmark stress trial – KSM-66" },
+      { id: 13, label: "Multiple KSM-66\nRCTs", group: "evidence", title: "Stress, sleep, strength, testosterone" },
+      { id: 14, label: "Sensoril\nDose-ranging", group: "evidence", title: "125–500 mg stress studies" },
+
+      // Regulatory
+      { id: 15, label: "FSSAI +\nAyush 2026", group: "regulatory", title: "Only Root permitted" },
+      { id: 16, label: "Ayurvedic\nPharmacopoeia", group: "regulatory", title: "API defines root only" },
+
+      // Indications
+      { id: 17, label: "Stress /\nCortisol", group: "indication", title: "Primary studied indication" },
+      { id: 18, label: "Sleep\nQuality", group: "indication", title: "Secondary indication" },
+      { id: 19, label: "Anxiety", group: "indication", title: "Supported by multiple trials" }
+    ]);
+
+    // ====================== EDGES ======================
+    const edges = new vis.DataSet([
+      // Taxonomy
+      { from: 2, to: 1, label: "is synonym of", arrows: "to" },
+
+      // Plant parts
+      { from: 1, to: 3, label: "has part", arrows: "to" },
+      { from: 1, to: 4, label: "has part", arrows: "to" },
+
+      // Extracts from parts
+      { from: 5, to: 3, label: "is extract of", arrows: "to" },
+      { from: 6, to: 3, label: "is extract of", arrows: "to" },
+      { from: 6, to: 4, label: "is extract of", arrows: "to" },
+      { from: 7, to: 3, label: "is extract of", arrows: "to" },
+      { from: 7, to: 4, label: "is extract of", arrows: "to" },
+      { from: 8, to: 3, label: "is extract of", arrows: "to" },
+
+      // Markers
+      { from: 5, to: 9, label: "standardized to ≥5%", arrows: "to" },
+      { from: 6, to: 9, label: "standardized to ≥10%", arrows: "to" },
+      { from: 7, to: 9, label: "high % glycosides", arrows: "to" },
+      { from: 10, to: 4, label: "higher in", arrows: "to" },
+      { from: 11, to: 3, label: "key marker in", arrows: "to" },
+
+      // Evidence linked to specific extracts
+      { from: 12, to: 5, label: "used", arrows: "to" },
+      { from: 13, to: 5, label: "used", arrows: "to" },
+      { from: 14, to: 6, label: "used", arrows: "to" },
+
+      // Evidence → Indications
+      { from: 12, to: 17, label: "supports", arrows: "to" },
+      { from: 13, to: 17, label: "supports", arrows: "to" },
+      { from: 13, to: 18, label: "supports", arrows: "to" },
+      { from: 14, to: 17, label: "supports", arrows: "to" },
+      { from: 14, to: 19, label: "supports", arrows: "to" },
+
+      // Regulatory
+      { from: 15, to: 3, label: "permits only", arrows: "to" },
+      { from: 15, to: 4, label: "prohibits", arrows: "to", color: { color: "#ef4444" } },
+      { from: 16, to: 3, label: "defines as", arrows: "to" }
+    ]);
+
+    // ====================== NETWORK ======================
+    const container = document.getElementById("network");
+    const data = { nodes, edges };
+
+    const options = {
+      nodes: {
+        shape: "box",
+        margin: 10,
+        font: { size: 14, face: "Segoe UI", color: "#f8fafc" },
+        borderWidth: 2,
+        shadow: true,
+        widthConstraint: { maximum: 140 }
+      },
+      edges: {
+        font: { size: 11, color: "#94a3b8", strokeWidth: 0 },
+        color: { color: "#475569", highlight: "#38bdf8" },
+        smooth: { type: "continuous" },
+        arrows: { to: { enabled: true, scaleFactor: 0.7 } }
+      },
+      groups: {
+        species:     { color: { background: "#166534", border: "#22c55e" } },
+        part:        { color: { background: "#92400e", border: "#f59e0b" } },
+        extract:     { color: { background: "#1e40af", border: "#3b82f6" } },
+        marker:      { color: { background: "#0f766e", border: "#14b8a6" } },
+        evidence:    { color: { background: "#854d0e", border: "#eab308" } },
+        regulatory:  { color: { background: "#991b1b", border: "#ef4444" } },
+        indication:  { color: { background: "#5b21b6", border: "#a78bfa" } }
+      },
+      physics: {
+        enabled: true,
+        barnesHut: {
+          gravitationalConstant: -8000,
+          centralGravity: 0.15,
+          springLength: 160,
+          springConstant: 0.04,
+          damping: 0.3
+        },
+        stabilization: { iterations: 120 }
+      },
+      interaction: {
+        hover: true,
+        tooltipDelay: 200,
+        hideEdgesOnDrag: false
+      }
+    };
+
+    const network = new vis.Network(container, data, options);
+
+    // ====================== NODE DETAILS DATA ======================
+    const nodeDetails = {
+      1: {
+        title: "Withania somnifera (L.) Dunal",
+        type: "Species / Taxonomic Identity",
+        description: "Accepted scientific name according to Plants of the World Online (Kew). Native range spans southern Europe to Central China and Africa to Myanmar. Family: Solanaceae.",
+        relations: [
+          "Has accepted status in POWO / WFO",
+          "Has multiple historical synonyms",
+          "Has plant parts: Root and Leaf"
+        ],
+        moat: "Starting from the correct accepted name prevents the common industry error of treating different botanical identities as interchangeable."
+      },
+      2: {
+        title: "Physalis somnifera L.",
+        type: "Synonym",
+        description: "Original basionym published by Linnaeus in 1753. Now treated as a synonym of Withania somnifera.",
+        relations: ["is synonym of → Withania somnifera"],
+        moat: "Synonym resolution stops people from thinking two names = two different plants."
+      },
+      3: {
+        title: "Root (Dried mature roots)",
+        type: "Plant Part",
+        description: "The primary part defined in the Ayurvedic Pharmacopoeia of India and the only part currently permitted by FSSAI and Ministry of Ayush (2026) for nutraceuticals and Ayush products.",
+        relations: [
+          "is extract of ← KSM-66, Sensoril, Shoden, Generic",
+          "permitted by ← FSSAI + Ayush 2026",
+          "defined as ← Ayurvedic Pharmacopoeia"
+        ],
+        moat: "This is one of the highest-value distinctions. Most generic 'Ashwagandha' claims ignore the root-only regulatory requirement."
+      },
+      4: {
+        title: "Leaf",
+        type: "Plant Part",
+        description: "Contains significantly higher levels of Withaferin-A. Explicitly prohibited by FSSAI and Ayush in 2026 for use in nutraceuticals and Ayush products in any form.",
+        relations: [
+          "is extract of ← Sensoril, Shoden",
+          "higher in → Withaferin A",
+          "prohibited by ← FSSAI + Ayush 2026"
+        ],
+        moat: "Clearly separating Leaf from Root prevents non-compliant products and safety issues from entering the recommendation engine."
+      },
+      5: {
+        title: "KSM-66",
+        type: "Extract Form (Branded)",
+        description: "Full-spectrum root-only extract standardized to ≥5% withanolides (HPLC). Produced by Ixoreal Biomed using a green chemistry process (no alcohol).",
+        relations: [
+          "is extract of → Root only",
+          "standardized to → Total Withanolides ≥5%",
+          "used in → Chandrasekhar 2012 and many other RCTs"
+        ],
+        moat: "Treating KSM-66 as a distinct node (not just 'Ashwagandha 5%') allows precise evidence linking and regulatory compliance checks."
+      },
+      6: {
+        title: "Sensoril",
+        type: "Extract Form (Branded)",
+        description: "Aqueous extract of root + leaf, standardized to higher withanolide glycosides and oligosaccharides. Different pharmacological profile from root-only extracts.",
+        relations: [
+          "is extract of → Root + Leaf",
+          "used in → multiple dose-ranging stress trials"
+        ],
+        moat: "Because it contains leaf, it currently has different regulatory status in India compared to pure root extracts."
+      },
+      7: {
+        title: "Shoden",
+        type: "Extract Form (Branded)",
+        description: "High-concentration extract (root + leaf) with very high withanolide glycoside content, allowing lower daily doses.",
+        relations: ["is extract of → Root + Leaf"],
+        moat: "High-potency forms need separate nodes so dose and evidence are not incorrectly transferred from lower-potency extracts."
+      },
+      8: {
+        title: "Generic Root Extract",
+        type: "Extract Form",
+        description: "Non-branded root extracts with variable standardization (often 1.5–5%). Quality and evidence strength vary widely.",
+        relations: ["is extract of → Root"],
+        moat: "Separating generic from well-studied branded forms prevents weak evidence from being applied to poorly characterized material."
+      },
+      9: {
+        title: "Total Withanolides",
+        type: "Marker / Bioactive",
+        description: "The main class of steroidal lactones used for standardization of Ashwagandha extracts.",
+        relations: ["is target of standardization for KSM-66, Sensoril, Shoden"],
+        moat: "Marker nodes allow the system to compare 'apples to apples' when evaluating different extracts."
+      },
+      10: {
+        title: "Withaferin A",
+        type: "Marker / Bioactive",
+        description: "A reactive withanolide present in much higher concentrations in the leaves. Cited as a key safety concern by Ayush and FSSAI.",
+        relations: ["higher in → Leaf"],
+        moat: "Explicitly tracking Withaferin A helps the system flag leaf-containing extracts for regulatory and safety review."
+      },
+      11: {
+        title: "Withanolide A",
+        type: "Marker / Bioactive",
+        description: "Important withanolide more characteristic of root material.",
+        relations: ["key marker in → Root"],
+        moat: "Different markers help distinguish root-dominant vs leaf-dominant profiles."
+      },
+      12: {
+        title: "Chandrasekhar et al. 2012",
+        type: "Clinical Evidence",
+        description: "Landmark double-blind RCT using KSM-66 (600 mg/day). Showed significant reduction in serum cortisol and stress scores versus placebo.",
+        relations: [
+          "used → KSM-66",
+          "supports → Stress / Cortisol"
+        ],
+        moat: "Linking the exact extract used in the trial prevents the common error of applying this evidence to any Ashwagandha powder or leaf extract."
+      },
+      13: {
+        title: "Multiple KSM-66 RCTs",
+        type: "Clinical Evidence",
+        description: "Body of evidence covering stress, sleep quality, strength, testosterone, and other outcomes using the same root-only extract.",
+        relations: ["used → KSM-66", "supports → Stress, Sleep"],
+        moat: "Aggregating evidence at the extract-form level (not species level) creates much higher confidence."
+      },
+      14: {
+        title: "Sensoril Dose-ranging Studies",
+        type: "Clinical Evidence",
+        description: "Trials examining 125–500 mg of the root+leaf extract on chronic stress and related outcomes.",
+        relations: ["used → Sensoril", "supports → Stress, Anxiety"],
+        moat: "Keeps evidence properly scoped to the specific form that was actually tested."
+      },
+      15: {
+        title: "FSSAI + Ayush (2026)",
+        type: "Regulatory Status",
+        description: "Clear advisories stating that only Ashwagandha roots and root extracts are permitted in nutraceuticals, health supplements, and Ayush products. Leaves are prohibited in any form.",
+        relations: [
+          "permits only → Root",
+          "prohibits → Leaf"
+        ],
+        moat: "This is currently one of the strongest compliance filters. A system that cannot enforce this distinction is commercially and legally weaker."
+      },
+      16: {
+        title: "Ayurvedic Pharmacopoeia of India",
+        type: "Regulatory / Standards",
+        description: "Defines Aśvagandhā as the dried mature roots of Withania somnifera Dunal.",
+        relations: ["defines as → Root"],
+        moat: "Pharmacopoeial definition anchors traditional and quality standards to the correct plant part."
+      },
+      17: {
+        title: "Stress / Cortisol Reduction",
+        type: "Indication",
+        description: "The most extensively studied modern indication for standardized Ashwagandha extracts.",
+        relations: ["supported by → multiple RCTs on KSM-66 and Sensoril"],
+        moat: "Indications are linked only through the specific extract forms that have actual data."
+      },
+      18: {
+        title: "Sleep Quality",
+        type: "Indication",
+        description: "Supported by several trials, particularly with root-only extracts.",
+        relations: ["supported by → KSM-66 evidence body"],
+        moat: "Prevents over-claiming sleep benefits for forms that lack direct data."
+      },
+      19: {
+        title: "Anxiety",
+        type: "Indication",
+        description: "Supported across both root-only and root+leaf extracts in different studies.",
+        relations: ["supported by → Sensoril and other trials"],
+        moat: "Allows nuanced claims based on the exact evidence available for each form."
+      }
+    };
+
+    // ====================== CLICK HANDLER ======================
+    network.on("click", function(params) {
+      if (params.nodes.length > 0) {
+        const nodeId = params.nodes[0];
+        const detail = nodeDetails[nodeId];
+        
+        if (detail) {
+          document.getElementById("placeholder").style.display = "none";
+          document.getElementById("content").style.display = "block";
+          
+          document.getElementById("node-title").textContent = detail.title;
+          document.getElementById("node-type").textContent = detail.type;
+          document.getElementById("node-description").textContent = detail.description;
+          
+          const relList = document.getElementById("node-relations");
+          relList.innerHTML = "";
+          detail.relations.forEach(r => {
+            const li = document.createElement("li");
+            li.textContent = r;
+            relList.appendChild(li);
+          });
+          
+          document.getElementById("node-moat").textContent = detail.moat;
+        }
+      }
+    });
+
+    // Fit the network nicely after stabilization
+    network.once("stabilizationIterationsDone", function() {
+      network.fit({ animation: true });
+    });
+  </script>
+</body>
+</html>
