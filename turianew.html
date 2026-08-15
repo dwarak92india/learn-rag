@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Turia — From brief to released product</title>
+<style>
+  body { font-family: system-ui, -apple-system, sans-serif; line-height: 1.55; color: #222; max-width: 820px; margin: 0 auto; padding: 32px 20px; }
+  h1 { font-size: 2.1rem; line-height: 1.15; margin: 0 0 12px; }
+  h2 { font-size: 1.45rem; margin: 48px 0 12px; }
+  h3 { font-size: 1.15rem; margin: 28px 0 8px; }
+  p { margin: 0 0 14px; }
+  .lede { font-size: 1.15rem; color: #444; max-width: 640px; }
+  .cta { display: inline-block; background: #111; color: #fff; padding: 12px 22px; text-decoration: none; margin: 8px 8px 8px 0; font-size: 0.95rem; }
+  .cta.secondary { background: #fff; color: #111; border: 1px solid #111; }
+  .section { margin: 56px 0; padding-top: 24px; border-top: 1px solid #ddd; }
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin: 20px 0; }
+  .card { border: 1px solid #ddd; padding: 16px; }
+  .note { background: #f7f7f7; padding: 14px 16px; font-size: 0.95rem; margin: 16px 0; }
+  .small { font-size: 0.9rem; color: #555; }
+  ul { padding-left: 20px; }
+  li { margin-bottom: 6px; }
+  @media (max-width: 600px) { .grid { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+
+<!-- HERO - commerce first -->
+<header>
+  <p class="small" style="letter-spacing:0.04em; text-transform:uppercase; color:#888; margin-bottom:10px;">AI-native · All-vegetarian · US market</p>
+  <h1>From brief to released product.<br>One counterparty. Fewer surprises.</h1>
+  <p class="lede">Turia is an AI-native supplement CRDMO. We take your product idea, resolve the hard constraints before the bench, and deliver a specification, qualified manufacturing path, and documented lot — so you spend less time discovering problems the hard way.</p>
+  <div style="margin-top:24px;">
+    <a href="#brief" class="cta">Send a brief</a>
+    <a href="#try" class="cta secondary">See what breaks first</a>
+  </div>
+  <p class="small" style="margin-top:16px;">Typical first-article target: ~12 weeks where the platform already covers the matrix. Novel matrices take longer — we tell you at the brief stage.</p>
+</header>
+
+<!-- WHAT YOU ACTUALLY GET -->
+<section class="section">
+  <h2>What you get</h2>
+  <p>One brief in. Six concrete outputs out:</p>
+  <div class="grid">
+    <div class="card">
+      <strong>1. Resolved specification</strong><br>
+      <span class="small">Form, dose, markers, dietary status, process constraints already checked.</span>
+    </div>
+    <div class="card">
+      <strong>2. Eliminations</strong><br>
+      <span class="small">What will not work (and why) — before you order pilot material.</span>
+    </div>
+    <div class="card">
+      <strong>3. Manufacturing path</strong><br>
+      <span class="small">Lines that have actually run similar formats, not just claimed capability.</span>
+    </div>
+    <div class="card">
+      <strong>4. Testing & release plan</strong><br>
+      <span class="small">Identity, assay, and release methods tied to the specific form.</span>
+    </div>
+    <div class="card">
+      <strong>5. Claims & permissibility</strong><br>
+      <span class="small">US structure/function status checked component-by-component.</span>
+    </div>
+    <div class="card">
+      <strong>6. Cost & timeline view</strong><br>
+      <span class="small">So you can decide whether to proceed.</span>
+    </div>
+  </div>
+  <p>We own the specification, the methods, the filings, and the release decision. Manufacturing runs on qualified partner lines. You get one counterparty and a portable specification.</p>
+</section>
+
+<!-- HOW IT WORKS - simplified -->
+<section class="section">
+  <h2>How it works (short version)</h2>
+  <p>Four agents run on a shared Formulation Graph. Nothing is attached to a generic ingredient name. Everything is bound to a specific form (species + plant part + process + marker + assay).</p>
+  <ul>
+    <li><strong>Brief</strong> — turns your idea into a resolved, constraint-checked specification.</li>
+    <li><strong>Grid</strong> — matches the form to lines that have run it (or close equivalents).</li>
+    <li><strong>Proof</strong> — defines the analytical package that actually proves identity and strength.</li>
+    <li><strong>Dossier</strong> — checks permissibility and claim support for the target market.</li>
+  </ul>
+  <p class="note">This is why problems that usually appear on the pilot line surface in the first 48 hours instead.</p>
+</section>
+
+<!-- INTERACTIVE TOOL - reframed commercially -->
+<section class="section" id="try">
+  <h2>Catch problems before you spend money</h2>
+  <p>Paste a product idea below. The same first-pass logic we run on real briefs will show what is likely to break on dose, format, process temperature, or dietary status.</p>
+  <p class="small">(This is a lightweight browser demo. The full engine also checks US permissibility, evidence grade per form, line history, and returns documents.)</p>
+  
+  <!-- Simple placeholder for the interactive tool - keep existing JS if desired -->
+  <div style="border:1px solid #ccc; padding:20px; margin:20px 0; background:#fafafa;">
+    <p><strong>Example input:</strong> sugar-free sleep gummy · vegan · US · melatonin + magnesium + L-theanine</p>
+    <p class="small">Typical output flags: magnesium salt weight vs gummy payload, melatonin photolability, sweetener status by market, strain survivability at depositing temperature, etc.</p>
+    <p><em>(Wire your existing interactive demo here — the framing above is the important change.)</em></p>
+  </div>
+  <a href="#brief" class="cta">Prefer to send the real brief instead</a>
+</section>
+
+<!-- KEY DIFFERENTIATORS - commercial language -->
+<section class="section">
+  <h2>Why this is different from a normal CDMO conversation</h2>
+  <div class="grid">
+    <div>
+      <h3>Form-level, not ingredient-level</h3>
+      <p class="small">Evidence, dose, and process constraints attach to the exact form. A root extract and a leaf extract are not interchangeable just because the Latin name matches.</p>
+    </div>
+    <div>
+      <h3>Problems surface early</h3>
+      <p class="small">Payload math, heat sensitivity, marker stability, and dietary status are checked before anyone orders material or books a line.</p>
+    </div>
+    <div>
+      <h3>One dietary status, everywhere</h3>
+      <p class="small">All-vegetarian lines. No animal-derived material, no cross-contact pathway. Cleaner claims and simpler change control.</p>
+    </div>
+    <div>
+      <h3>We own the science, not the steel</h3>
+      <p class="small">Our bench + qualified partner lines. Specifications stay portable. You are not locked to one factory’s equipment list.</p>
+    </div>
+  </div>
+</section>
+
+<!-- MARKETS & PROOF -->
+<section class="section">
+  <h2>Markets and proof points</h2>
+  <ul>
+    <li><strong>United States</strong> — live. Component-level permissibility and 21 CFR 111 discipline.</li>
+    <li><strong>EU / UK</strong> — on the roadmap. We show the constraints even if we are not yet shipping there.</li>
+    <li>First article typically targeted around 12 weeks when the matrix is already covered by the platform. Novel matrices are scoped at the brief stage so there are no surprises.</li>
+    <li>Every fact carries its source and the date it was last checked. Where the record is silent, we say so.</li>
+  </ul>
+</section>
+
+<!-- PRIMARY CTA -->
+<section class="section" id="brief">
+  <h2>Send a brief</h2>
+  <p>Describe the product you want to make (format, key actives, target market, any non-negotiables). We return a first-pass resolution — what works, what doesn’t, and why — usually within two working days.</p>
+  <p>No obligation. The point is to show you the constraints while they are still cheap to fix.</p>
+  <a href="mailto:hello@turia.example" class="cta">Send the brief</a>
+  <p class="small" style="margin-top:12px;">Or just reply with a one-paragraph description. That is enough to start.</p>
+</section>
+
+<!-- FOOTER STRIP -->
+<footer class="section" style="border-top:1px solid #ddd; padding-top:24px; font-size:0.9rem; color:#666;">
+  <p>Turia — AI-native, all-vegetarian supplement CRDMO.<br>
+  We close the gap between a paper and a production line.</p>
+</footer>
+
+</body>
+</html>
