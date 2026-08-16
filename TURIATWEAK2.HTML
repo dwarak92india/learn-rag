@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Turia — The formulation is resolved before the pilot is booked</title>
+<meta name="description" content="Turia is an AI-native, all-vegetarian supplement CRDMO. Every brief is resolved on Turia Core before a pilot is booked. Extracts, engineered actives, premix or finished product — released to specification.">
+<meta name="theme-color" content="#0D0D0F">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink: #0D0D0F;
+  --body: #3A3A3E;
+  --mute: #8A8A90;
+  --faint: #B6B6BA;
+  --line: #E6E5E2;
+  --fill: #F7F6F4;
+  --acc: #C2410C;
+  --white: #fff;
+  --sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+  --mono: 'IBM Plex Mono', 'SF Mono', Menlo, Consolas, monospace;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--sans);
+  color: var(--body);
+  background: var(--white);
+  -webkit-font-smoothing: antialiased;
+  font-size: 16px;
+  line-height: 1.6;
+}
+.wrap { max-width: 1140px; margin: 0 auto; padding: 0 36px; }
+
+/* Nav */
+nav {
+  position: sticky; top: 0; z-index: 100;
+  background: rgba(255,255,255,0.94);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--line);
+}
+.nav {
+  display: flex; align-items: center; justify-content: space-between;
+  height: 64px; max-width: 1140px; margin: 0 auto; padding: 0 36px;
+}
+.logo { font-size: 18px; font-weight: 600; color: var(--ink); text-decoration: none; letter-spacing: -0.02em; }
+.nav ul { display: flex; gap: 26px; list-style: none; }
+.nav a { font-size: 13.5px; color: var(--body); text-decoration: none; }
+.nav a:hover { color: var(--ink); }
+.nav .cta-nav {
+  font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.1em; text-transform: uppercase;
+  border: 1px solid var(--ink); padding: 9px 16px; color: var(--ink); text-decoration: none; transition: 0.2s;
+}
+.nav .cta-nav:hover { background: var(--ink); color: #fff; }
+
+/* Type */
+.eyebrow { font-family: var(--mono); font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--acc); margin-bottom: 16px; }
+h1 { font-size: clamp(32px, 4.6vw, 50px); line-height: 1.1; letter-spacing: -0.035em; font-weight: 600; color: var(--ink); }
+h2 { font-size: clamp(25px, 3vw, 34px); line-height: 1.15; letter-spacing: -0.03em; font-weight: 600; color: var(--ink); margin-bottom: 14px; }
+h3 { font-size: 19px; line-height: 1.25; font-weight: 600; color: var(--ink); margin-bottom: 8px; }
+.lede { font-size: 17px; line-height: 1.55; color: var(--body); max-width: 560px; }
+.sm { font-size: 14px; color: var(--mute); line-height: 1.55; }
+
+/* Buttons */
+.btn {
+  font-family: var(--mono); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase;
+  padding: 13px 22px; text-decoration: none; display: inline-block; transition: 0.2s;
+}
+.btn-p { background: var(--ink); color: #fff; }
+.btn-p:hover { background: var(--acc); }
+.btn-s { border: 1px solid var(--line); color: var(--ink); }
+.btn-s:hover { border-color: var(--ink); }
+
+/* Layout */
+section { padding: 84px 0; border-top: 1px solid var(--line); }
+.hero { padding: 76px 0 68px; border-top: none; }
+.dark { background: var(--ink); color: #ccc; border-top: none; }
+.dark h2, .dark h3 { color: #fff; }
+.dark .sm { color: #8A8A90; }
+
+.hero-grid { display: grid; grid-template-columns: 1.05fr 0.95fr; gap: 48px; align-items: start; }
+.btns { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 28px; }
+
+/* Panel */
+.panel {
+  background: #0D0D0F; padding: 22px 24px;
+  font-family: var(--mono); font-size: 12.5px; line-height: 1.8; color: #E8E8EA;
+}
+.panel-hd {
+  display: flex; justify-content: space-between; padding-bottom: 10px; margin-bottom: 14px;
+  border-bottom: 1px solid #24242A; font-size: 9.5px; letter-spacing: 0.14em; text-transform: uppercase;
+}
+.panel-hd .l { color: var(--acc); }
+.panel-hd .r { color: #6A6A72; }
+.row { display: grid; grid-template-columns: 92px 1fr; gap: 10px; margin-bottom: 3px; }
+.k { color: #6A6A72; font-size: 9.5px; letter-spacing: 0.08em; text-transform: uppercase; padding-top: 3px; }
+.v { color: #E8E8EA; }
+.v.w { color: #E8802F; }
+.panel-ft { margin-top: 14px; padding-top: 12px; border-top: 1px solid #24242A; color: #E8802F; font-size: 10px; }
+
+/* Grids */
+.six { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 28px; }
+.six-item { background: var(--fill); padding: 18px 16px; }
+.six-item strong { display: block; color: var(--ink); margin-bottom: 4px; font-size: 14.5px; }
+
+.g2 { display: grid; grid-template-columns: 1fr 1fr; gap: 36px; }
+.g3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; }
+
+.constraint { border-left: 3px solid var(--acc); padding: 2px 0 2px 18px; margin-bottom: 24px; }
+.constraint h3 { margin-bottom: 4px; }
+.constraint p { font-size: 14.5px; color: var(--mute); }
+
+.agent { border-top: 1px solid var(--line); padding: 16px 0; display: grid; grid-template-columns: 130px 1fr; gap: 18px; }
+.agent:last-child { border-bottom: 1px solid var(--line); }
+.agent .name { font-weight: 600; color: var(--ink); }
+
+.try-box {
+  background: #0D0D0F; padding: 24px; font-family: var(--mono); font-size: 13px; color: #E8E8EA;
+}
+.try-box textarea {
+  width: 100%; background: #17171C; border: 1px solid #2A2A30; color: #E8E8EA;
+  font-family: var(--mono); font-size: 13px; padding: 13px; margin-top: 8px; min-height: 88px; resize: vertical;
+}
+.try-box button {
+  margin-top: 12px; font-family: var(--mono); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase;
+  background: var(--acc); color: #fff; border: none; padding: 11px 20px; cursor: pointer;
+}
+.out { margin-top: 16px; line-height: 1.75; }
+.out .line { display: grid; grid-template-columns: 100px 1fr; gap: 10px; margin-bottom: 3px; }
+.out .label { color: #6A6A72; font-size: 10px; text-transform: uppercase; }
+.out .val { color: #E8E8EA; }
+.out .warn { color: #E8802F; }
+
+.cta-block { background: var(--fill); padding: 48px 36px; text-align: center; }
+.list { margin: 12px 0 0 18px; }
+.list li { margin-bottom: 6px; font-size: 14.5px; color: var(--mute); }
+
+footer { padding: 36px 0; border-top: 1px solid var(--line); font-family: var(--mono); font-size: 11px; color: var(--mute); }
+.foot { display: flex; justify-content: space-between; gap: 20px; }
+
+@media (max-width: 900px) {
+  .hero-grid, .six, .g2, .g3, .agent { grid-template-columns: 1fr; }
+  .nav ul { display: none; }
+  .wrap { padding: 0 20px; }
+  section { padding: 60px 0; }
+  .hero { padding: 52px 0 44px; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav">
+    <a href="#" class="logo">Turia</a>
+    <ul>
+      <li><a href="#what">What you get</a></li>
+      <li><a href="#catch">Early detection</a></li>
+      <li><a href="#core">Turia Core</a></li>
+      <li><a href="#try">Try it</a></li>
+      <li><a href="#quality">Quality</a></li>
+      <li><a href="#brief">Send a brief</a></li>
+    </ul>
+    <a href="#brief" class="cta-nav">Send a brief</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="wrap">
+    <div class="hero-grid">
+      <div>
+        <p class="eyebrow">AI-native · All-vegetarian · US market</p>
+        <h1>The formulation is resolved before the pilot is booked.</h1>
+        <p class="lede" style="margin-top:18px;">
+          One counterparty. Form-level precision. Every lot released to specification.
+        </p>
+        <p class="sm" style="margin-top:16px; max-width:460px;">
+          Extracts, engineered actives, premix or finished product — resolved on Turia Core, manufactured on qualified lines, documented and released by us.
+        </p>
+        <div class="btns">
+          <a href="#brief" class="btn btn-p">Send a brief</a>
+          <a href="#try" class="btn btn-s">See what breaks first</a>
+        </div>
+        <p class="sm" style="margin-top:20px;">Typical first-article target ≈ 12 weeks when the matrix is already covered.</p>
+      </div>
+
+      <div class="panel">
+        <div class="panel-hd">
+          <span class="l">Turia Core</span>
+          <span class="r">resolving</span>
+        </div>
+        <div class="row"><div class="k">Brief</div><div class="v">sugar-free sleep gummy · vegan · US</div></div>
+        <div class="row"><div class="k">Actives</div><div class="v">melatonin · magnesium bisglycinate · L-theanine</div></div>
+        <div class="row"><div class="k">Format</div><div class="v">pectin gel · gellan alternative</div></div>
+        <div class="row"><div class="k">Sweetener</div><div class="v">allulose — US permitted</div></div>
+        <div class="row"><div class="k">Dose fit</div><div class="v w">2.8 g salt exceeds 3 g payload → split across 2 gummies</div></div>
+        <div class="row"><div class="k">Stability</div><div class="v">photolabile → opaque pack + overage from data</div></div>
+        <div class="row"><div class="k">Claims</div><div class="v">US structure/function · matched forms only</div></div>
+        <div class="panel-ft">3 constraints resolved · 2 eliminations · ready for Grid</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHAT YOU GET -->
+<section id="what">
+  <div class="wrap">
+    <p class="eyebrow">Commercial outputs</p>
+    <h2>One brief in. Six answers out.</h2>
+    <p class="lede">Documents you can hand to your regulatory lead, buyer or board. Usually within two working days. Free first-pass resolution.</p>
+
+    <div class="six">
+      <div class="six-item">
+        <strong>1. Resolved specification</strong>
+        <span class="sm">Form, dose, markers and process constraints already checked.</span>
+      </div>
+      <div class="six-item">
+        <strong>2. Eliminations</strong>
+        <span class="sm">What will not work — and why — before you order pilot material.</span>
+      </div>
+      <div class="six-item">
+        <strong>3. Manufacturing path</strong>
+        <span class="sm">Lines that have actually run similar formats.</span>
+      </div>
+      <div class="six-item">
+        <strong>4. Testing & release plan</strong>
+        <span class="sm">Identity and assay methods tied to the specific form.</span>
+      </div>
+      <div class="six-item">
+        <strong>5. Claims & permissibility</strong>
+        <span class="sm">US structure/function checked component-by-component.</span>
+      </div>
+      <div class="six-item">
+        <strong>6. Cost & timeline view</strong>
+        <span class="sm">So you can decide whether to proceed.</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EARLY DETECTION -->
+<section id="catch">
+  <div class="wrap">
+    <p class="eyebrow">The practical difference</p>
+    <h2>Problems caught before the bench</h2>
+    <p class="lede" style="margin-bottom:32px;">These are the failures that normally surface only at pilot. We surface them in the first pass.</p>
+
+    <div class="constraint">
+      <h3>Payload arithmetic</h3>
+      <p>A 3 g gummy carries about 3 g. 400 mg elemental magnesium as bisglycinate is already ~2.8 g of salt. The system flags it and proposes a split dose or format change.</p>
+    </div>
+    <div class="constraint">
+      <h3>Process survivability</h3>
+      <p>Most lactobacilli die at depositing temperature. Spore-formers survive. The system eliminates the wrong organism instead of discovering it on the line.</p>
+    </div>
+    <div class="constraint">
+      <h3>Dietary status integrity</h3>
+      <p>All-vegetarian on every line. No animal-derived material in carriers, glazes or processing aids. Cross-contact pathways are designed out.</p>
+    </div>
+    <div class="constraint">
+      <h3>Form-level evidence</h3>
+      <p>Nothing attaches to a generic ingredient name. Evidence is bound to the exact form (species + part + process + marker). Silent promotion is blocked.</p>
+    </div>
+  </div>
+</section>
+
+<!-- TURIA CORE -->
+<section id="core">
+  <div class="wrap">
+    <p class="eyebrow">Platform</p>
+    <h2>Four agents. One graph.</h2>
+    <p class="lede" style="margin-bottom:28px;">Turia Core runs four specialised agents against a shared Formulation Graph. Every fact is typed, sourced, and graded. Nothing is attached to a generic ingredient name.</p>
+
+    <div class="agent">
+      <div class="name">Brief</div>
+      <div class="sm">Turns the human request into a resolved specification. Performs name resolution, dose math, dietary propagation and first-pass constraint checks.</div>
+    </div>
+    <div class="agent">
+      <div class="name">Grid</div>
+      <div class="sm">Matches the resolved form to manufacturing lines that have actually run similar matrices — using licences, filings and production history, not marketing claims.</div>
+    </div>
+    <div class="agent">
+      <div class="name">Proof</div>
+      <div class="sm">Defines the analytical package that proves identity and strength for the specific form in use. Methods are tied to the form, not the category.</div>
+    </div>
+    <div class="agent">
+      <div class="name">Dossier</div>
+      <div class="sm">Checks US permissibility and structure/function support component-by-component. Where the record is silent, it marks the fact UNCLEAR rather than inventing an answer.</div>
+    </div>
+
+    <div style="margin-top:40px;">
+      <h3>Form-level discipline</h3>
+      <p class="sm" style="max-width:640px; margin-top:8px;">
+        The graph does not treat “ashwagandha” as a single object. It distinguishes root vs leaf, extraction process, marker and assay. Evidence that belongs to one form is never silently applied to another. This is the core of the system’s reliability.
+      </p>
+    </div>
+
+    <div style="margin-top:28px;">
+      <h3>What the graph carries</h3>
+      <ul class="list">
+        <li>Canonical forms (species + part + process + marker + assay)</li>
+        <li>Constraint rules (payload, temperature, solubility, dietary status)</li>
+        <li>Evidence graded by strength and freshness</li>
+        <li>Line capability and history</li>
+        <li>Market permissibility and claim support</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- INTERACTIVE -->
+<section id="try" class="dark">
+  <div class="wrap">
+    <p class="eyebrow" style="color:#E8802F;">Live diagnostic</p>
+    <h2>See what breaks before you spend money</h2>
+    <p class="sm" style="max-width:520px; margin-bottom:24px;">Paste a short product idea. This is a lightweight first-pass of the same constraint logic used on real briefs.</p>
+
+    <div class="try-box">
+      <div style="font-size:10px; letter-spacing:0.12em; text-transform:uppercase; color:#6A6A72; margin-bottom:8px;">Product idea</div>
+      <textarea id="tryInput" placeholder="e.g. sugar-free sleep gummy, vegan, US, melatonin + magnesium + L-theanine"></textarea>
+      <button onclick="runTry()">Resolve constraints</button>
+      <div class="out" id="tryOut"></div>
+    </div>
+  </div>
+</section>
+
+<!-- QUALITY & COMMITMENTS -->
+<section id="quality">
+  <div class="wrap">
+    <p class="eyebrow">Release discipline</p>
+    <h2>What we commit to</h2>
+
+    <div class="g3" style="margin-top:32px;">
+      <div>
+        <h3>United States first</h3>
+        <p class="sm">Live market. Component-level permissibility and 21 CFR 111 discipline. EU and UK are on the roadmap.</p>
+      </div>
+      <div>
+        <h3>All-vegetarian lines</h3>
+        <p class="sm">No animal-derived material anywhere in the process. Cleaner claims and simpler change control.</p>
+      </div>
+      <div>
+        <h3>One counterparty</h3>
+        <p class="sm">We own the specification, the methods, the filings and the release decision. Manufacturing runs on qualified partner lines.</p>
+      </div>
+    </div>
+
+    <div style="margin-top:48px;">
+      <h3>Evidence, not assertion</h3>
+      <p class="sm" style="max-width:620px; margin-top:8px;">
+        Every fact carried by the system has a source and a date. When the public or internal record is incomplete, the system marks the status UNCLEAR. We do not upgrade weak evidence to support a stronger claim.
+      </p>
+    </div>
+
+    <div style="margin-top:28px;">
+      <h3>Portable specifications</h3>
+      <p class="sm" style="max-width:620px; margin-top:8px;">
+        Because we own the science rather than a single set of equipment, the specification can move. You are not locked to one factory’s constraints.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section id="brief">
+  <div class="wrap">
+    <div class="cta-block">
+      <h2>Send a brief</h2>
+      <p class="sm" style="max-width:460px; margin:0 auto 22px;">
+        Describe the product you want to make. We return a first-pass resolution — what works, what doesn’t, and why — usually within two working days. No obligation.
+      </p>
+      <a href="mailto:brief@turia.com?subject=Product%20brief" class="btn btn-p">Email the brief</a>
+      <p class="sm" style="margin-top:16px;">Or simply reply with a one-paragraph description. That is enough to start.</p>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="wrap">
+    <div class="foot">
+      <div>Turia — AI-native, all-vegetarian supplement CRDMO</div>
+      <div>The formulation is resolved before the pilot is booked.</div>
+    </div>
+  </div>
+</footer>
+
+<script>
+function runTry() {
+  const input = (document.getElementById('tryInput').value || '').toLowerCase();
+  const out = document.getElementById('tryOut');
+  if (!input.trim()) {
+    out.innerHTML = '<div class="line"><span class="label">Status</span><span class="val warn">Enter a short product idea first</span></div>';
+    return;
+  }
+
+  let html = '';
+  html += '<div class="line"><span class="label">Input</span><span class="val">' + input.substring(0, 90) + (input.length > 90 ? '…' : '') + '</span></div>';
+
+  if (input.includes('gummy') || input.includes('gummies')) {
+    if (input.includes('magnesium')) {
+      html += '<div class="line"><span class="label">Payload</span><span class="val warn">Magnesium salt weight likely exceeds single gummy capacity → consider split dose</span></div>';
+    }
+    if (input.includes('probiotic') || input.includes('acidophilus') || input.includes('lactobacillus')) {
+      html += '<div class="line"><span class="label">Process</span><span class="val warn">Most lactobacilli die at depositing temperature → prefer spore-formers</span></div>';
+    }
+    if (input.includes('psyllium') || input.includes('fibre') || input.includes('fiber')) {
+      html += '<div class="line"><span class="label">Payload</span><span class="val warn">High-dose fibre rarely fits a 3 g gummy</span></div>';
+    }
+  }
+  if (input.includes('vegan') || input.includes('vegetarian')) {
+    html += '<div class="line"><span class="label">Dietary</span><span class="val">All-vegetarian path available — carriers and glazes must stay clean</span></div>';
+  }
+  if (input.includes('melatonin')) {
+    html += '<div class="line"><span class="label">Stability</span><span class="val">Photolabile — opaque pack + overage from stability data required</span></div>';
+  }
+  if (input.includes('ashwagandha') || input.includes('withania')) {
+    html += '<div class="line"><span class="label">Form</span><span class="val">Requires plant part + marker (e.g. root, withanolides %) — generic name is insufficient</span></div>';
+  }
+
+  if (!html.includes('warn') && !html.includes('Form') && !html.includes('Dietary') && !html.includes('Stability')) {
+    html += '<div class="line"><span class="label">First pass</span><span class="val">No immediate hard constraints detected in this lightweight check. Full resolution still recommended.</span></div>';
+  }
+
+  html += '<div class="line" style="margin-top:12px;"><span class="label">Next</span><span class="val">Send the real brief for the complete six-output package.</span></div>';
+  out.innerHTML = html;
+}
+</script>
+</body>
+</html>
