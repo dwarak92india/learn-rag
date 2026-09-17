@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#12151A">
+<title>India's Spirituality &amp; Devotion Economy — Whitespace, Segmentation &amp; Saturation</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,wght@0,400;0,500;0,600;1,400;1,500&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#12151A;
+    --surface:#1A1E25;
+    --surface-2:#20242C;
+    --ink:#E8E4DA;
+    --ink-dim:#C7C3B8;
+    --muted:#8E93A0;
+    --rule:#2B303A;
+    --gold:#E3A857;
+    --gold-dim:#8a6a3c;
+    --rust:#C15A46;
+    --sage:#7FA98C;
+    --amber:#D9A441;
+    --serif:'Newsreader', Georgia, serif;
+    --sans:'IBM Plex Sans', -apple-system, sans-serif;
+    --mono:'IBM Plex Mono', ui-monospace, monospace;
+    --maxw:780px;
+  }
+  *{box-sizing:border-box; -webkit-tap-highlight-color:transparent;}
+  html{scroll-behavior:smooth; -webkit-text-size-adjust:100%;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--ink);
+    font-family:var(--sans);
+    font-size:16px;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  ::selection{background:var(--gold-dim); color:var(--ink);}
+  a{color:var(--gold); text-decoration:none;}
+  a:hover{text-decoration:underline;}
+  img,svg{max-width:100%;}
+  .wrap{max-width:var(--maxw); margin:0 auto; padding:0 24px;}
+
+  nav.toc{
+    position:sticky; top:0; z-index:50;
+    background:rgba(18,21,26,0.92);
+    backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--rule);
+  }
+  nav.toc .wrap{
+    display:flex; gap:18px; overflow-x:auto;
+    padding:12px 24px;
+    font-family:var(--mono);
+    font-size:12.5px;
+    white-space:nowrap;
+    -webkit-overflow-scrolling:touch;
+    scrollbar-width:thin;
+  }
+  nav.toc a{color:var(--ink-dim); flex:0 0 auto;}
+  nav.toc a:hover{color:var(--gold); text-decoration:none;}
+
+  .eyebrow{
+    font-family:var(--mono);
+    font-size:12.5px;
+    color:var(--gold);
+    letter-spacing:0.02em;
+    margin-bottom:18px;
+  }
+
+  section{padding:52px 0;}
+  section + section{border-top:1px solid var(--rule);}
+  section:first-of-type{padding-top:60px;}
+
+  h2{
+    font-family:var(--serif);
+    font-weight:500;
+    font-size:1.7rem;
+    margin:0 0 24px;
+    line-height:1.3;
+  }
+  h3{
+    font-family:var(--serif);
+    font-weight:500;
+    font-size:1.28rem;
+    margin:0 0 12px;
+    color:var(--ink);
+  }
+  p{margin:0 0 16px; max-width:68ch;}
+  .lede{font-size:1.05rem; color:var(--ink-dim); max-width:66ch;}
+
+  ol.findings{list-style:none; margin:0; padding:0; counter-reset:f;}
+  ol.findings li{
+    counter-increment:f;
+    display:flex; gap:16px;
+    padding:18px 0;
+    border-bottom:1px solid var(--rule);
+  }
+  ol.findings li:first-child{padding-top:0;}
+  ol.findings li:last-child{border-bottom:none;}
+  ol.findings li::before{
+    content:counter(f);
+    font-family:var(--mono);
+    font-size:13px;
+    color:var(--gold);
+    border:1px solid var(--gold-dim);
+    width:26px; height:26px; flex:0 0 26px;
+    border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+    margin-top:2px;
+  }
+  ol.findings p{margin:0;}
+  ol.findings strong{color:var(--ink); font-weight:600;}
+
+  .table-scroll{
+    overflow-x:auto;
+    border:1px solid var(--rule);
+    border-radius:3px;
+    -webkit-overflow-scrolling:touch;
+  }
+  table{
+    border-collapse:collapse;
+    width:100%;
+    min-width:1080px;
+    font-size:13.5px;
+  }
+  thead th{
+    text-align:left;
+    font-family:var(--mono);
+    font-weight:500;
+    font-size:11.5px;
+    color:var(--muted);
+    background:var(--surface-2);
+    padding:12px 14px;
+    border-bottom:1px solid var(--rule);
+    position:sticky; top:0;
+  }
+  tbody td{
+    padding:12px 14px;
+    border-bottom:1px solid var(--rule);
+    vertical-align:top;
+  }
+  tbody tr:last-child td{border-bottom:none;}
+  tbody tr:hover{background:var(--surface);}
+  .cluster-row td{
+    background:var(--surface-2);
+    font-family:var(--mono);
+    font-size:11px;
+    letter-spacing:0.04em;
+    color:var(--gold);
+    padding:9px 14px;
+  }
+  td.num{font-family:var(--mono); color:var(--muted); font-size:12px;}
+  td.seg{font-weight:600; color:var(--ink); min-width:190px;}
+  td.small{color:var(--ink-dim); font-size:13px; min-width:150px;}
+  td.evidence{color:var(--ink-dim); min-width:230px;}
+
+  .sat{
+    font-family:var(--mono);
+    font-size:13px;
+    white-space:nowrap;
+    display:inline-flex;
+    align-items:baseline;
+    gap:6px;
+  }
+  .sat b{font-weight:500; font-size:11px; opacity:0.75;}
+  .sat.open{color:var(--sage);}
+  .sat.mid{color:var(--amber);}
+  .sat.sat{color:var(--rust);}
+
+  .table-note{
+    font-family:var(--mono);
+    font-size:12px;
+    color:var(--muted);
+    margin-top:14px;
+  }
+
+  .wcard{
+    display:grid;
+    grid-template-columns:56px 1fr;
+    gap:22px;
+    padding:28px 0;
+    border-bottom:1px solid var(--rule);
+  }
+  .wcard:first-of-type{padding-top:8px;}
+  .wcard:last-of-type{border-bottom:none;}
+  .wrank{
+    font-family:var(--serif);
+    font-size:2.1rem;
+    color:var(--gold);
+    line-height:1;
+  }
+  .wcard h3{margin-bottom:4px;}
+  .wcard .wtitle-sub{
+    font-family:var(--mono);
+    font-size:11.5px;
+    color:var(--muted);
+    margin-bottom:16px;
+  }
+  .wpoint{margin-bottom:12px;}
+  .wpoint .wlabel{
+    font-family:var(--mono);
+    font-size:11px;
+    color:var(--gold);
+    display:block;
+    margin-bottom:3px;
+  }
+  .wpoint p{margin:0; max-width:none; color:var(--ink-dim); font-size:14.5px;}
+  .wpoint p strong{color:var(--ink); font-weight:600;}
+
+  .footnote-box{
+    margin-top:8px;
+    padding:16px 20px;
+    background:var(--surface);
+    border:1px solid var(--rule);
+    border-radius:2px;
+    font-size:13.5px;
+    color:var(--muted);
+  }
+
+  .cstack{
+    padding:26px 0;
+    border-bottom:1px solid var(--rule);
+  }
+  .cstack:last-of-type{border-bottom:none;}
+  .cstack h3{color:var(--rust);}
+  .cstack .clabel{
+    font-family:var(--mono);
+    font-size:11px;
+    color:var(--muted);
+    display:block;
+    margin-bottom:6px;
+  }
+  .cstack dl{margin:0;}
+  .cstack dt{
+    font-family:var(--mono);
+    font-size:11.5px;
+    color:var(--gold);
+    margin-top:14px;
+  }
+  .cstack dt:first-child{margin-top:0;}
+  .cstack dd{margin:5px 0 0; color:var(--ink-dim); font-size:14.5px; max-width:66ch;}
+
+  @media (max-width:640px){
+    body{font-size:15px;}
+    .wrap{padding:0 18px;}
+    nav.toc .wrap{padding:10px 18px; gap:14px; font-size:12px;}
+    .eyebrow{font-size:11.5px; margin-bottom:12px;}
+    section{padding:32px 0;}
+    section:first-of-type{padding-top:36px;}
+    h2{font-size:1.4rem; margin-bottom:18px;}
+    h3{font-size:1.12rem;}
+    ol.findings li{gap:12px; padding:14px 0;}
+    ol.findings li::before{width:22px; height:22px; font-size:12px; flex-basis:22px;}
+    .wcard{grid-template-columns:1fr; gap:6px; padding:22px 0;}
+    .wrank{font-size:1.4rem;}
+    .wpoint p{font-size:14px;}
+    .cstack dd{font-size:14px;}
+    .table-note{font-size:11px;}
+  }
+
+  @media (max-width:400px){
+    .wrap{padding:0 14px;}
+  }
+</style>
+</head>
+<body>
+
+<nav class="toc">
+  <div class="wrap">
+    <a href="#findings">Key findings</a>
+    <a href="#part-a">Part A — Whitespace</a>
+    <a href="#part-b">Part B — Segmentation</a>
+    <a href="#part-c">Part C — Saturation</a>
+  </div>
+</nav>
+
+<section id="findings">
+  <div class="wrap">
+    <h2>Key findings</h2>
+    <ol class="findings">
+      <li><p><strong>Astrology consultation is the only fully saturated venture category.</strong> AstroTalk FY25 revenue ₹1,176 Cr, PBT ~₹285 Cr; ~41,000 astrologers; 50M+ downloads. Tracxn lists 293 active AstroTalk competitors — only 13 funded. A long tail behind one clear king.</p></li>
+      <li><p><strong>Online puja/chadhava aggregation is consolidating fast but still land-grabbing.</strong> Sri Mandir: 40M+ downloads, ~3.5M MAU, ~52 lakh pujas/offerings across 70+ temples in the trailing year; raised ₹175 Cr Series C led by Susquehanna Asia Venture Capital to ~$50M total. Tracxn counts 238 online-devotional-services startups — only 14 funded.</p></li>
+      <li><p><strong>The temple economy is enormous and largely offline.</strong> NSSO-derived temple economy ≈ ₹3.02 lakh Cr (~2.32% of GDP); Hindus spend ≈ ₹4.74 lakh Cr/year on religious travel. TTD's FY25-26 budget is ₹5,258.68 Cr with ₹1,729 Cr expected hundi.</p></li>
+      <li><p><strong>Death &amp; ancestral rites is the strongest under-built whitespace.</strong> India registers ~10.2M deaths/year. Anthyesti reached only ~₹1.16 Cr revenue in FY20-21 and got no Shark Tank deal. NRI online pind daan is served only by SEO-driven single-operator sites at ₹7,100–11,000 — no trusted branded aggregator exists.</p></li>
+      <li><p><strong>Faith-finance is almost empty of startups.</strong> No dedicated pilgrimage-loan/EMI or vertical faith-crowdfunding fintech was found — Milaap/Ketto are generic — despite Ram Mandir's ~₹3,000–3,500 Cr in donations and constant temple and gaushala construction.</p></li>
+      <li><p><strong>NRI ARPU is roughly 10x domestic.</strong> ~₹7,000 vs ₹600–800 on Sri Mandir, with ~20% of demand from the diaspora. That gap, more than any headline market-size figure, is where the decision-relevant money sits.</p></li>
+    </ol>
+  </div>
+</section>
+
+<section id="part-a">
+  <div class="wrap">
+    <div class="eyebrow">Part A</div>
+    <h2>Whitespace, ranked</h2>
+    <p class="lede">Ranked by demand strength × openness × feasibility for a founder with finance and travel-product experience.</p>
+
+    <div class="wcard">
+      <div class="wrank">01</div>
+      <div>
+        <h3>Branded, trusted death &amp; last-rites services</h3>
+        <div class="wtitle-sub">Antyeshti + 13-day ceremonies + NRI remote rites</div>
+        <div class="wpoint"><span class="wlabel">What's open</span><p>No trusted, pan-India, fixed-price brand for at-need funeral logistics, or its NRI-facing extension — remote pind daan, asthi visarjan, annual tithi via verified pandit and video. Customer: urban tier-1 nuclear families and the diaspora (US/UK/UAE/Canada/Australia). Geography: metros plus Gaya/Kashi/Prayagraj/Haridwar ritual hubs.</p></div>
+        <div class="wpoint"><span class="wlabel">Demand evidence</span><p>~10.2M registered deaths/yr (CRS 2021); Gaya Pitru Paksha ~15–22 lakh pilgrims/yr; 20% of Sri Mandir demand is diaspora at ~₹7,000 ARPU (10x domestic); dozens of SEO pind-daan sites sustaining paid search at ₹7,100–11,000.</p></div>
+        <div class="wpoint"><span class="wlabel">Supply evidence</span><p>Anthyesti (2016) reached only ~₹1.16 Cr revenue FY20-21 and got <strong>no Shark Tank deal</strong>; Last Journey (FNP) claims ~₹20 Cr ARR (self-reported); both sub-scale and city-limited. NRI rites are served only by unbranded single operators.</p></div>
+        <div class="wpoint"><span class="wlabel">Tried &amp; stalled</span><p>Anthyesti's Shark Tank rejection and the category's near-total absence of venture funding after a decade signal hard unit economics, not absent demand.</p></div>
+        <div class="wpoint"><span class="wlabel">Why open now</span><p>UPI and video rituals normalise remote at-need payments; diaspora smartphone penetration; Sri Mandir has proven NRI willingness-to-pay; city crematorium slot-booking is formalising.</p></div>
+        <div class="wpoint"><span class="wlabel">Strongest counter</span><p>Once-per-relative low repeat, emotionally fraught marketing, high trust ceiling — families default to known local pandits. Grief-time CAC is the killer.</p></div>
+        <div class="wpoint"><span class="wlabel">Model &amp; first customer</span><p>Verified-pandit marketplace + fixed-price bundles. First customer: an <strong>NRI adult child arranging a parent's shraddha/pind daan from the US/UK</strong> — highest ARPU, most acute logistics pain.</p></div>
+      </div>
+    </div>
+
+    <div class="wcard">
+      <div class="wrank">02</div>
+      <div>
+        <h3>Assisted senior-citizen yatra</h3>
+        <div class="wtitle-sub">Medically-supported pilgrimage for aging parents</div>
+        <div class="wpoint"><span class="wlabel">What's open</span><p>A productised, medically-supported yatra service for 65+ pilgrims — Char Dham, Vaishno Devi, Tirupati — with escorts, altitude and mobility support, timed darshan and vegetarian/ritual-aware logistics. Customer: adult children in India and abroad booking for parents.</p></div>
+        <div class="wpoint"><span class="wlabel">Demand evidence</span><p>Char Dham 30+ lakh pilgrims (2024), Kedarnath alone 15 lakh; Vaishno Devi 94.83 lakh (2024); Hindus spend ≈ ₹4.74 lakh Cr/year on religious travel (NSSO); recurring altitude, weather and crowd fatalities on high-altitude circuits.</p></div>
+        <div class="wpoint"><span class="wlabel">Supply evidence</span><p>Generic OTAs (IRCTC, MakeMyTrip, Thomas Cook) sell packages without senior-specific care; assisted senior travel is otherwise informal. Faith-tech apps are only beginning to pilot offline travel.</p></div>
+        <div class="wpoint"><span class="wlabel">Tried &amp; stalled</span><p>No startup owns "safe yatra for my aging parents" — pilgrimage aggregators (My Tirth India) died on capital, not on demand, and none specialised in the senior tier.</p></div>
+        <div class="wpoint"><span class="wlabel">Why open now</span><p>Corridor projects (Kashi Vishwanath, Ayodhya, Mahakal Lok) and Vande Bharat connectivity expand senior footfall; senior smartphone adoption lets adult children book remotely; diaspora willingness-to-pay for parents' care is proven.</p></div>
+        <div class="wpoint"><span class="wlabel">Strongest counter</span><p>Low frequency and thin margin per trip; heavy operational load (medical, escorts); seasonal concentration on a few circuits.</p></div>
+        <div class="wpoint"><span class="wlabel">Model &amp; first customer</span><p>Premium assisted-travel service with per-trip pricing and repeat via circuit expansion. First customer: <strong>a Bengaluru or US adult child booking Char Dham for 65+ parents.</strong></p></div>
+      </div>
+    </div>
+
+    <div class="wcard">
+      <div class="wrank">03</div>
+      <div>
+        <h3>NRI diaspora — one relationship for all home-country faith needs</h3>
+        <div class="wpoint"><span class="wlabel">What's open</span><p>A single trusted diaspora brand bundling puja/chadhava, annual ancestral tithi, parents' assisted yatra and festival gifting — today split across single-purpose apps.</p></div>
+        <div class="wpoint"><span class="wlabel">Demand evidence</span><p>Sri Mandir NRI ARPU ~₹7,000 vs ₹600–800 domestic; ~20% of Sri Mandir/Vama demand is diaspora; faith-tech apps already list US/UK/UAE/Canada/Australia/NZ as core NRI markets.</p></div>
+        <div class="wpoint"><span class="wlabel">Supply evidence</span><p>Sri Mandir/Vama serve puja/chadhava but not death rites or assisted yatra; nobody owns the full diaspora faith relationship.</p></div>
+        <div class="wpoint"><span class="wlabel">Why open now</span><p>Diaspora remittance flows, aging India-based parents, and normalised video rituals.</p></div>
+        <div class="wpoint"><span class="wlabel">Strongest counter</span><p>Incumbents like Sri Mandir can extend into these adjacencies faster than a newcomer can build trust.</p></div>
+        <div class="wpoint"><span class="wlabel">Model &amp; first customer</span><p>Premium diaspora membership plus high-ticket occasion services. First customer: <strong>a US/UK Gujarati/Tamil/Telugu professional managing elderly parents' rituals remotely.</strong></p></div>
+      </div>
+    </div>
+
+    <div class="wcard">
+      <div class="wrank">04</div>
+      <div>
+        <h3>Verified fixed-price pandit/purohit marketplace</h3>
+        <div class="wtitle-sub">With language matching</div>
+        <div class="wpoint"><span class="wlabel">What's open</span><p>A trust-first, verified, fixed-price pandit marketplace with language matching (Iyer/Bengali/Marathi/Telugu), quality ratings, and samagri included, for personal-occasion pujas.</p></div>
+        <div class="wpoint"><span class="wlabel">Demand evidence</span><p>Dozens of SEO players already exist (99Pandit claims 20,000+ pandits); personal-milestone pujas recur in every Hindu household; language-matching pain is repeatedly cited in reviews.</p></div>
+        <div class="wpoint"><span class="wlabel">Supply evidence</span><p>All incumbents are thin SEO sites with weak verification and no brand trust; no funded scaled player exists.</p></div>
+        <div class="wpoint"><span class="wlabel">Why open now</span><p>UPI, review culture, and urban migration separating families from hometown priests.</p></div>
+        <div class="wpoint"><span class="wlabel">Strongest counter</span><p>Priests resist disintermediation; take-rate is low; families revert to community references.</p></div>
+        <div class="wpoint"><span class="wlabel">Model &amp; first customer</span><p>Verified marketplace with samagri attach. First customer: <strong>a young urban couple doing griha pravesh away from their hometown priest.</strong></p></div>
+      </div>
+    </div>
+
+    <div class="wcard">
+      <div class="wrank">05</div>
+      <div>
+        <h3>Temple-town pilgrim accommodation &amp; darshan-experience aggregation</h3>
+        <div class="wpoint"><span class="wlabel">What's open</span><p>Tech-enabled, quality-graded pilgrim stays plus darshan-slot bundling at temple towns — Ayodhya, Varanasi, Ujjain, Katra, Tirupati.</p></div>
+        <div class="wpoint"><span class="wlabel">Demand evidence</span><p>55% of pilgrims use mid/small hotels (NSSO); Ayodhya/Varanasi tourism surge post-Ram Mandir; AppsForBharat is deploying ₹175 Cr into 20+ temple towns with fulfilment hubs.</p></div>
+        <div class="wpoint"><span class="wlabel">Supply evidence</span><p>OYO plus informal inventory; temple guest houses remain offline and opaque; no pilgrim-specialist OTA exists.</p></div>
+        <div class="wpoint"><span class="wlabel">Strongest counter</span><p>Low frequency, thin margins, and faith-tech incumbents already building their own fulfilment hubs.</p></div>
+        <div class="wpoint"><span class="wlabel">Model &amp; first customer</span><p>Pilgrim-specialist booking with assisted-yatra upsell. First customer: <strong>a family planning a multi-generational Ayodhya-Kashi-Prayagraj trip.</strong></p></div>
+      </div>
+    </div>
+
+    <div class="wcard">
+      <div class="wrank">06</div>
+      <div>
+        <h3>Corporate/business astrology, verified fixed-price</h3>
+        <div class="wpoint"><span class="wlabel">What's open</span><p>Productised, outcome-framed advisory for founders/SMEs — launch timing, hiring muhurat — plus a verified fixed-price premium tier that fixes the trust deficit of pay-per-minute marketplaces.</p></div>
+        <div class="wpoint"><span class="wlabel">Demand evidence</span><p>~60% of AstroTalk revenue is already marriage/life-decision anxiety; business anxiety is adjacent and higher-ticket; persistent complaints about per-minute upselling in app reviews.</p></div>
+        <div class="wpoint"><span class="wlabel">Strongest counter</span><p>Legitimacy ceiling for "corporate astrology"; AstroTalk can add a premium tier itself.</p></div>
+        <div class="wpoint"><span class="wlabel">Model &amp; first customer</span><p>Retainer plus verified-expert premium subscription. First customer: <strong>a first-time founder or family-business owner.</strong></p></div>
+      </div>
+    </div>
+
+    <div class="wcard">
+      <div class="wrank">07</div>
+      <div>
+        <h3>Festival/kathakar ticketing, sponsorship &amp; event-ops tech</h3>
+        <div class="wpoint"><span class="wlabel">What's open</span><p>Ticketing, sponsorship management, and crowd/ops tech for the pandal/kathakar/devotional-concert economy.</p></div>
+        <div class="wpoint"><span class="wlabel">Demand evidence</span><p>Durga Puja WB ₹32,377 Cr (British Council 2019, now cited at ₹46,000–50,000 Cr for 2025); Kumbh 2025: 66.3 crore visitors; kathakar events draw mass crowds.</p></div>
+        <div class="wpoint"><span class="wlabel">Strongest counter</span><p>Highly seasonal, committee politics, and an informal cash culture.</p></div>
+        <div class="wpoint"><span class="wlabel">Model</span><p>SaaS plus sponsorship marketplace plus crowd analytics.</p></div>
+      </div>
+    </div>
+
+    <div class="wcard">
+      <div class="wrank">08</div>
+      <div>
+        <h3>Kids' mythology &amp; dharma edtech</h3>
+        <div class="wpoint"><span class="wlabel">What's open</span><p>Premium, multi-lingual kids' content — a modernised Amar Chitra Katha model — proven by devotional YouTube scale but with no premium subscription product for children.</p></div>
+        <div class="wpoint"><span class="wlabel">Demand evidence</span><p>T-Series Bhakti Sagar ~82M subscribers demonstrates category-level attention.</p></div>
+        <div class="wpoint"><span class="wlabel">Strongest counter</span><p>Parents don't pay for values content easily.</p></div>
+      </div>
+    </div>
+
+    <div class="wcard">
+      <div class="wrank">09</div>
+      <div>
+        <h3>Faith-based recurring giving / crowdfunding + gaushala rails</h3>
+        <div class="wpoint"><span class="wlabel">What's open</span><p>No vertical faith-crowdfunding platform exists despite Ram Mandir's ~₹3,000–3,500 Cr and constant temple/gaushala construction; Milaap/Ketto are generic.</p></div>
+        <div class="wpoint"><span class="wlabel">Strongest counter</span><p>Donation is trust-driven and often routed directly to institutions; take-rate sensitivity is extreme.</p></div>
+      </div>
+    </div>
+
+    <div class="footnote-box">Whitespaces that scored 1–2 but rank below the cut for a finance-background founder: priest training/livelihood platform, spiritual life-coaching, gaushala recurring donations, vaastu advisory — genuine but weaker on founder-fit or monetisation clarity.</div>
+  </div>
+</section>
+
+<section id="part-b">
+  <div class="wrap">
+    <div class="eyebrow">Part B</div>
+    <h2>Master segmentation — 47 purchase occasions</h2>
+    <p class="lede">Segmented by job-to-be-done and purchase occasion, not by company category. Saturation scored 1 (wide open) to 5 (saturated); ranges reflect split evidence.</p>
+
+    <div class="table-scroll">
+      <table>
+        <thead>
+          <tr>
+            <th style="width:28px">#</th>
+            <th>Segment</th>
+            <th>Job / occasion</th>
+            <th>Payer &amp; frequency</th>
+            <th>Size / volume proxy</th>
+            <th>Organised players</th>
+            <th style="width:90px">Sat.</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="cluster-row"><td colspan="7">Consultations</td></tr>
+          <tr><td class="num">1</td><td class="seg">Vedic astrology consult (marketplace)</td><td class="small">Reassurance on marriage/career/health</td><td class="small">End-user; recurring/impulse</td><td class="evidence">AstroTalk ₹1,176 Cr FY25 (Entrackr)</td><td class="small">AstroTalk, AstroSage, Astroyogi, InstaAstro, Vama, Vaya</td><td><span class="sat sat">●●●●● <b>5</b></span></td></tr>
+          <tr><td class="num">2</td><td class="seg">KP / Nadi / Lal Kitab systems</td><td class="small">System-specific reading</td><td class="small">End-user; one-off/repeat</td><td class="evidence">No funded pure-play</td><td class="small">AstroSage (Lal Kitab), independents</td><td><span class="sat open">●●○○○ <b>2</b></span></td></tr>
+          <tr><td class="num">3</td><td class="seg">Numerology / tarot / palmistry / face reading</td><td class="small">Quick-answer divination</td><td class="small">End-user; impulse</td><td class="evidence">Bundled inside apps</td><td class="small">AstroTalk, InstaAstro</td><td><span class="sat sat">●●●●○ <b>4</b></span></td></tr>
+          <tr><td class="num">4</td><td class="seg">Vaastu consultation</td><td class="small">Fix layout before build/move</td><td class="small">Homeowner/business; one-off</td><td class="evidence">Fragmented offline</td><td class="small">InstaAstro add-on, independents</td><td><span class="sat open">●●○○○ <b>2</b></span></td></tr>
+          <tr><td class="num">5</td><td class="seg">Gemstone / rudraksha / yantra remedy</td><td class="small">Buy remedy after consult</td><td class="small">End-user; one-off + repeat</td><td class="evidence">AstroTalk Store ₹140 Cr 2025 / ₹200 Cr ARR / 1.6M orders (Entrackr)</td><td class="small">AstroTalk Store, AstroSage AstroStore, GemPundit</td><td><span class="sat sat">●●●●○ <b>4</b></span></td></tr>
+          <tr><td class="num">6</td><td class="seg">Muhurat / kundli matching for marriage</td><td class="small">Auspicious date + horoscope match</td><td class="small">Family; one-off</td><td class="evidence">~60% of AstroTalk revenue marriage-linked</td><td class="small">AstroTalk, matrimony sites, ClickAstro</td><td><span class="sat mid">●●●○○ <b>3</b></span></td></tr>
+          <tr><td class="num">7</td><td class="seg">Corporate / business astrology</td><td class="small">Time launches, hires, deals</td><td class="small">SME/founder; retainer</td><td class="evidence">No disclosed player revenue</td><td class="small">Celebrity astrologers only</td><td><span class="sat open">●○○○○ <b>1</b></span></td></tr>
+
+          <tr class="cluster-row"><td colspan="7">Rituals &amp; offerings</td></tr>
+          <tr><td class="num">8</td><td class="seg">Online puja / homam aggregation</td><td class="small">Ritual remotely at named temple</td><td class="small">End-user + NRI; occasion + repeat</td><td class="evidence">Sri Mandir 52 lakh pujas/yr; Vama ₹20 Cr FY25</td><td class="small">Sri Mandir, Vama, DevDham, Utsav</td><td><span class="sat sat">●●●●○ <b>4</b></span></td></tr>
+          <tr><td class="num">9</td><td class="seg">Chadhava / offerings-as-a-service</td><td class="small">Send flowers/bhog to deity</td><td class="small">End-user + NRI; repeat</td><td class="evidence">Vama's strongest revenue driver</td><td class="small">Same as above</td><td><span class="sat sat">●●●●○ <b>4</b></span></td></tr>
+          <tr><td class="num">10</td><td class="seg">E-darshan / live streaming</td><td class="small">Daily virtual temple visit</td><td class="small">Free/ad; daily</td><td class="evidence">Sri Mandir daily darshan</td><td class="small">Sri Mandir, DevDham, boards</td><td><span class="sat mid">●●●○○ <b>3</b></span></td></tr>
+          <tr><td class="num">11</td><td class="seg">Festival-specific pujas</td><td class="small">Seasonal ritual participation</td><td class="small">End-user; annual</td><td class="evidence">DevDham lists 30+ festival pujas</td><td class="small">Faith-tech apps</td><td><span class="sat mid">●●●○○ <b>3</b></span></td></tr>
+          <tr><td class="num">12</td><td class="seg">Personal-occasion pujas (griha pravesh, namkaran, upanayanam, vehicle, shop opening)</td><td class="small">Life/business milestone ritual</td><td class="small">Family/business; per event</td><td class="evidence">99Pandit claims 20,000+ pandits</td><td class="small">99Pandit, VidhiPujan, MyPanditG, BookMyPooja</td><td><span class="sat open">●●○○○ <b>2</b></span></td></tr>
+          <tr><td class="num">13</td><td class="seg">Remedial / dosha pujas (kaal sarp, mangal, pitru)</td><td class="small">Neutralise affliction</td><td class="small">End-user; one-off</td><td class="evidence">Bundled with astrology remedy</td><td class="small">Prayag Pandits, astrology apps</td><td><span class="sat mid">●●●○○ <b>3</b></span></td></tr>
+          <tr><td class="num">14</td><td class="seg">Vrat / fasting guidance</td><td class="small">Observe fast correctly</td><td class="small">Free/content; recurring</td><td class="evidence">Panchang apps</td><td class="small">AstroSage, content apps</td><td><span class="sat open">●●○○○ <b>2</b></span></td></tr>
+
+          <tr class="cluster-row"><td colspan="7">Death &amp; ancestral rites</td></tr>
+          <tr><td class="num">15</td><td class="seg">Antyeshti / cremation logistics (13-day)</td><td class="small">Dignified at-need last rites</td><td class="small">Bereaved family; one-off urgent</td><td class="evidence">~10.2M deaths/yr (CRS 2021); self-est. $1–3.5B market (low conf.)</td><td class="small">Anthyesti, Last Journey (FNP), Sukhant</td><td><span class="sat open">●○○○○–●●○○○ <b>1–2</b></span></td></tr>
+          <tr><td class="num">16</td><td class="seg">Pind daan / shraddha / tarpan</td><td class="small">Liberate ancestors' souls</td><td class="small">Family + NRI; annual + one-off</td><td class="evidence">Gaya Pitru Paksha ~15–22 lakh pilgrims/yr</td><td class="small">Prayag Pandits, Holy Voyages, Iskcon Gaya</td><td><span class="sat open">●○○○○–●●○○○ <b>1–2</b></span></td></tr>
+          <tr><td class="num">17</td><td class="seg">NRI remote ancestral rites (asthi visarjan, annual tithi)</td><td class="small">Perform rites from abroad via video</td><td class="small">NRI; annual recurring</td><td class="evidence">20% of Sri Mandir demand diaspora; NRI ARPU ₹7,000</td><td class="small">Fragmented pandit sites</td><td><span class="sat open">●○○○○ <b>1</b></span></td></tr>
+
+          <tr class="cluster-row"><td colspan="7">Priest / officiant supply</td></tr>
+          <tr><td class="num">18</td><td class="seg">Pandit/purohit booking &amp; language matching</td><td class="small">Right-language verified priest on time</td><td class="small">End-user; per event</td><td class="evidence">20,000+ pandits claimed (self-reported)</td><td class="small">99Pandit, BookMyPooja, VidhiPujan</td><td><span class="sat open">●●○○○ <b>2</b></span></td></tr>
+          <tr><td class="num">19</td><td class="seg">Priest training / Vedic pathshala / gig livelihoods</td><td class="small">Certify &amp; employ priests</td><td class="small">Priest/temple; recurring</td><td class="evidence">Apps onboard priests informally</td><td class="small">AppsForBharat partnerships</td><td><span class="sat open">●○○○○ <b>1</b></span></td></tr>
+
+          <tr class="cluster-row"><td colspan="7">Religious goods &amp; commerce</td></tr>
+          <tr><td class="num">20</td><td class="seg">Incense / dhoop / home fragrance (D2C)</td><td class="small">Buy premium/eco incense</td><td class="small">Consumer; repeat</td><td class="evidence">Phool ₹77 Cr FY25, first profit ₹2.5 Cr; $12.7M raised</td><td class="small">Phool, Zed Black, Mangalam, Hoovu</td><td><span class="sat sat">●●●●○ <b>4</b></span></td></tr>
+          <tr><td class="num">21</td><td class="seg">Puja samagri / kits</td><td class="small">Ritual materials bundled</td><td class="small">Consumer; repeat</td><td class="evidence">Attached to puja apps</td><td class="small">Faith-tech apps, Blinkit/Amazon</td><td><span class="sat mid">●●●○○ <b>3</b></span></td></tr>
+          <tr><td class="num">22</td><td class="seg">Official temple prasad delivery</td><td class="small">Authentic prasad shipped home</td><td class="small">Consumer + NRI; repeat</td><td class="evidence">TTD makes 300,000 laddus/day; official channel weak</td><td class="small">Grey-market resellers</td><td><span class="sat open">●●○○○ <b>2</b></span></td></tr>
+          <tr><td class="num">23</td><td class="seg">Idols / murtis / brass / handicraft</td><td class="small">Buy idol/decor</td><td class="small">Consumer; occasion</td><td class="evidence">Amazon/Flipkart depth</td><td class="small">Amazon, Etsy, artisans</td><td><span class="sat mid">●●●○○ <b>3</b></span></td></tr>
+          <tr><td class="num">24</td><td class="seg">Devotional apparel / silks / festival decor</td><td class="small">Occasion dressing</td><td class="small">Consumer; seasonal</td><td class="evidence">Durga Puja apparel ~₹800 Cr, Kolkata markets</td><td class="small">Regional retail, D2C</td><td><span class="sat mid">●●●○○ <b>3</b></span></td></tr>
+          <tr><td class="num">25</td><td class="seg">Gau products / panchagavya / Ayurveda crossover</td><td class="small">Cow-based/spiritual wellness</td><td class="small">Consumer; repeat</td><td class="evidence">Gaushala flows</td><td class="small">Patanjali, gaushala brands</td><td><span class="sat open">●●○○○ <b>2</b></span></td></tr>
+
+          <tr class="cluster-row"><td colspan="7">Pilgrimage &amp; travel</td></tr>
+          <tr><td class="num">26</td><td class="seg">Pilgrimage packages/circuits (Char Dham, Jyotirlinga, Shakti Peeth)</td><td class="small">Organised multi-day yatra</td><td class="small">Pilgrim family; 1–2x/yr</td><td class="evidence">Religious tourism ₹1.34 lakh Cr revenue, 2022 (MoT)</td><td class="small">IRCTC, MakeMyTrip, Thomas Cook</td><td><span class="sat mid">●●●○○ <b>3</b></span></td></tr>
+          <tr><td class="num">27</td><td class="seg">Senior-citizen assisted yatra</td><td class="small">Safe medically-supported pilgrimage</td><td class="small">Adult children; 1x</td><td class="evidence">Char Dham 30+ lakh, Vaishno Devi 94.83 lakh pilgrims (2024); senior tier unserved</td><td class="small">Faith-tech apps entering offline; informal operators</td><td><span class="sat open">●○○○○–●●○○○ <b>1–2</b></span></td></tr>
+          <tr><td class="num">28</td><td class="seg">Pilgrim accommodation (dharamshala/guest house)</td><td class="small">Affordable stay near shrine</td><td class="small">Pilgrim; per trip</td><td class="evidence">55% pilgrims use mid/small hotels (NSSO)</td><td class="small">OYO, trusts, homestays</td><td><span class="sat open">●●○○○ <b>2</b></span></td></tr>
+          <tr><td class="num">29</td><td class="seg">Spiritual retreats / ashram stays</td><td class="small">Immersive multi-day practice</td><td class="small">Seeker; occasional</td><td class="evidence">Rishikesh hub</td><td class="small">Isha, AoL, private retreats</td><td><span class="sat open">●●○○○ <b>2</b></span></td></tr>
+
+          <tr class="cluster-row"><td colspan="7">Content &amp; community</td></tr>
+          <tr><td class="num">30</td><td class="seg">Devotional music / bhajan streaming</td><td class="small">Listen to bhajans/aartis</td><td class="small">Free/ad; daily</td><td class="evidence">T-Series Bhakti Sagar ~82M subs</td><td class="small">T-Series, Shemaroo Bhakti, Saregama</td><td><span class="sat sat">●●●●○ <b>4</b></span></td></tr>
+          <tr><td class="num">31</td><td class="seg">Satsang / katha video (guru &amp; kathakar)</td><td class="small">Watch pravachan/katha</td><td class="small">Free/ad + event; recurring</td><td class="evidence">Aniruddhacharya ~14M, Bageshwar Dham ~8M subs</td><td class="small">Creator channels, Sanskar TV</td><td><span class="sat mid">●●●○○ <b>3</b></span></td></tr>
+          <tr><td class="num">32</td><td class="seg">Scripture / stotra / panchang apps</td><td class="small">Read Gita/Ramayana, daily panchang</td><td class="small">Free/freemium; daily</td><td class="evidence">AstroSage panchang scale</td><td class="small">AstroSage, Gita apps, Sri Mandir</td><td><span class="sat mid">●●●○○ <b>3</b></span></td></tr>
+          <tr><td class="num">33</td><td class="seg">Kids' mythology content</td><td class="small">Teach children dharma/stories</td><td class="small">Parent; subscription</td><td class="evidence">Amar Chitra Katha legacy</td><td class="small">ACK, YouTube channels</td><td><span class="sat open">●○○○○–●●○○○ <b>1–2</b></span></td></tr>
+          <tr><td class="num">34</td><td class="seg">Vernacular spiritual influencers / short-form</td><td class="small">Bite-size in-language devotion</td><td class="small">Free/ad; daily</td><td class="evidence">Devotional among top YouTube categories</td><td class="small">IG/YouTube creators</td><td><span class="sat mid">●●●○○ <b>3</b></span></td></tr>
+
+          <tr class="cluster-row"><td colspan="7">Learning &amp; practice</td></tr>
+          <tr><td class="num">35</td><td class="seg">Yoga teacher training (YTT)</td><td class="small">Certify as yoga teacher</td><td class="small">Learner; high-ticket one-off</td><td class="evidence">Rishikesh global YTT hub</td><td class="small">Rishikesh schools, Isha</td><td><span class="sat mid">●●●○○ <b>3</b></span></td></tr>
+          <tr><td class="num">36</td><td class="seg">Meditation / mantra / japa apps</td><td class="small">Daily guided practice</td><td class="small">Freemium; daily</td><td class="evidence">Sadhguru app 7.9M downloads, 4.87★/160k ratings</td><td class="small">Isha, Black Lotus, AoL</td><td><span class="sat mid">●●●○○ <b>3</b></span></td></tr>
+          <tr><td class="num">37</td><td class="seg">Sanskrit / Vedic / Gita courses online</td><td class="small">Learn scripture/language</td><td class="small">Learner; course</td><td class="evidence">Isha/Chinmaya courses</td><td class="small">Isha, Chinmaya, edtech</td><td><span class="sat open">●●○○○ <b>2</b></span></td></tr>
+          <tr><td class="num">38</td><td class="seg">Spiritual life-coaching</td><td class="small">1:1 meaning/stress guidance</td><td class="small">Client; recurring</td><td class="evidence">Overlaps wellness coaching</td><td class="small">Independent coaches</td><td><span class="sat open">●○○○○–●●○○○ <b>1–2</b></span></td></tr>
+
+          <tr class="cluster-row"><td colspan="7">Secular / wellness spirituality</td></tr>
+          <tr><td class="num">39</td><td class="seg">Mindfulness / sleep / stress apps</td><td class="small">Reduce anxiety, sleep better</td><td class="small">Freemium; daily</td><td class="evidence">Black Lotus, global apps</td><td class="small">Black Lotus, Calm/Headspace India</td><td><span class="sat mid">●●●○○ <b>3</b></span></td></tr>
+          <tr><td class="num">40</td><td class="seg">Breathwork / sound healing / manifestation</td><td class="small">Alt-wellness practices</td><td class="small">Consumer; occasional</td><td class="evidence">Isha/AoL mass reach</td><td class="small">Isha (Inner Engineering), AoL (SKY)</td><td><span class="sat open">●●○○○ <b>2</b></span></td></tr>
+
+          <tr class="cluster-row"><td colspan="7">Festivals &amp; events</td></tr>
+          <tr><td class="num">41</td><td class="seg">Pandal / festival economy (Ganesh, Durga, Garba)</td><td class="small">Organise/sponsor festival</td><td class="small">Committees/sponsors; annual</td><td class="evidence">Durga Puja WB ₹32,377 Cr (British Council 2019)</td><td class="small">Committees, sponsors, event cos</td><td><span class="sat open">●●○○○ <b>2</b></span></td></tr>
+          <tr><td class="num">42</td><td class="seg">Kumbh / mela participation &amp; services</td><td class="small">Attend mega-gathering</td><td class="small">Pilgrim/govt; periodic</td><td class="evidence">Kumbh 2025: 66.3 Cr visitors (official)</td><td class="small">Govt + private camps</td><td><span class="sat open">●●○○○ <b>2</b></span></td></tr>
+          <tr><td class="num">43</td><td class="seg">Devotional concerts / kathakar ticketing</td><td class="small">Attend live spiritual event</td><td class="small">Attendee/sponsor; per event</td><td class="evidence">Kathakar pandal events mass draw</td><td class="small">Event promoters</td><td><span class="sat open">●○○○○–●●○○○ <b>1–2</b></span></td></tr>
+
+          <tr class="cluster-row"><td colspan="7">Faith-finance</td></tr>
+          <tr><td class="num">44</td><td class="seg">Temple gold / gold-coin gifting</td><td class="small">Invest/gift gold on auspicious days</td><td class="small">Consumer/trust; occasion</td><td class="evidence">TTD 2,780 kg gold with SBI (2017)</td><td class="small">Banks (GMS), jewellers, MMTC</td><td><span class="sat open">●●○○○ <b>2</b></span></td></tr>
+          <tr><td class="num">45</td><td class="seg">Pilgrimage EMI / loans</td><td class="small">Finance costly yatra</td><td class="small">Pilgrim; per trip</td><td class="evidence">No dedicated fintech found</td><td class="small">None identified</td><td><span class="sat open">●○○○○ <b>1</b></span></td></tr>
+          <tr><td class="num">46</td><td class="seg">Faith crowdfunding (temple/gaushala)</td><td class="small">Fund construction</td><td class="small">Donor; campaign</td><td class="evidence">Ram Mandir ~₹3,000–3,500 Cr (trust)</td><td class="small">Milaap, Ketto (generic)</td><td><span class="sat open">●○○○○–●●○○○ <b>1–2</b></span></td></tr>
+          <tr><td class="num">47</td><td class="seg">Gaushala / cow-shelter recurring donations</td><td class="small">Recurring cow-care giving</td><td class="small">Donor; recurring</td><td class="evidence">Gau products + donations</td><td class="small">Gaushala trusts</td><td><span class="sat open">●○○○○ <b>1</b></span></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="table-note">Sat. = saturation score, 1 (wide open) to 5 (saturated). Green = open, amber = mid, rust = saturated. Figures triangulated across 3+ sources where possible; single-source figures are noted inline.</p>
+  </div>
+</section>
+
+<section id="part-c">
+  <div class="wrap">
+    <div class="eyebrow">Part C</div>
+    <h2>Saturated-segment evidence stacks</h2>
+    <p class="lede">For each fully saturated segment: the funding and revenue stack, why a new entrant loses head-on, and the sub-niches that remain contestable.</p>
+
+    <div class="cstack">
+      <span class="clabel">C1</span>
+      <h3>Astrology consultation marketplaces</h3>
+      <dl>
+        <dt>Funded players &amp; funding</dt><dd>AstroTalk ~$30.3M raised to date, crossed $1B valuation to become a unicorn in 2026 via ESOP buyback; InstaAstro $2.3M (Artha/LogX, 2024); AstroSage bootstrapped since 2004; Vaya $1.5M (Accel, 2025).</dd>
+        <dt>Leaders' revenue/scale</dt><dd>AstroTalk ₹1,176 Cr FY25 (vs ₹651 Cr FY24), PBT ~₹285 Cr (vs ₹127 Cr), ~₹1,600 Cr ARR (Aug 2025), 41,000+ astrologers, 50M+ downloads, 1.2M+ reviews, ~4.5 lakh daily users. AstroTalk Store: ₹140 Cr in 2025, ~₹200 Cr ARR, 1.6M orders.</dd>
+        <dt>CAC / marketing signals</dt><dd>Largest cost lines are astrologer payouts, then performance marketing; ~90% of revenue from 1:1 consults, ~60% marriage-related — signalling heavy paid acquisition and a narrow monetised use-case.</dd>
+        <dt>Consolidation / failure</dt><dd>293 competitors, only 13 funded (Tracxn) — a long dying tail behind one king.</dd>
+        <dt>Why a new entrant loses</dt><dd>AstroTalk's astrologer liquidity, brand and marketing spend are unmatchable head-on.</dd>
+        <dt>Still-open sub-niches</dt><dd>Tamil/Telugu/Kannada-only vernacular depth; KP/Nadi/Lal Kitab pure-play; a verified fixed-price tier that fixes the per-minute trust deficit; corporate/business astrology; NRI premium.</dd>
+      </dl>
+    </div>
+
+    <div class="cstack">
+      <span class="clabel">C2</span>
+      <h3>Online puja / chadhava aggregation</h3>
+      <dl>
+        <dt>Funded players</dt><dd>AppsForBharat/Sri Mandir ~$50M total (₹175 Cr / $20M Series C, Jul 2025, Susquehanna with Fundamentum/Elevation/Peak XV); Vama ₹22 Cr pre-Series A (Wavemaker, 2025); DevDham $1.59M; UtsavApp ~$1.02M (India Quotient/100X.VC).</dd>
+        <dt>Leaders' scale</dt><dd>Sri Mandir 40M+ downloads, ~3.5M MAU, 52 lakh pujas/offerings across 70+ temples in the trailing year; Vama ₹20 Cr FY25 (70% from temple services), 250+ temples.</dd>
+        <dt>Why a new entrant loses</dt><dd>Sri Mandir's capital, temple partnerships across 20+ towns with fulfilment hubs, and NRI ARPU lead are entrenched.</dd>
+        <dt>Still-open sub-niches</dt><dd>Death/ancestral rites (they don't do it), assisted physical yatra, single-temple official commerce, non-Hindu devotion.</dd>
+      </dl>
+    </div>
+
+    <div class="cstack">
+      <span class="clabel">C3</span>
+      <h3>Incense / home-fragrance D2C</h3>
+      <dl>
+        <dt>Funded leader</dt><dd>Phool.co: $12.7M over 8 rounds (Sixth Sense, IAN, Draper Richards Kaplan, Alia Bhatt); ₹50 Cr FY24 revenue (+~75% YoY), grown to ~₹77 Cr FY25 with a first profit of ~₹2.5 Cr; premium ₹145–165 SKUs; 253 employees.</dd>
+        <dt>Competition</dt><dd>Zed Black, Mangalam, Hoovu, Nytarra — both funded and unfunded.</dd>
+        <dt>Why a new entrant loses</dt><dd>Brand plus supply-chain (temple floral-waste sourcing) plus ESG narrative moat.</dd>
+        <dt>Still-open sub-niches</dt><dd>Regional/ritual-specific dhoop, premium havan samagri kits, gau-based products, temple-branded incense partnerships.</dd>
+      </dl>
+    </div>
+
+    <div class="cstack">
+      <span class="clabel">C4</span>
+      <h3>Devotional music/content streaming</h3>
+      <dl>
+        <dt>Scale</dt><dd>T-Series Bhakti Sagar ~82M subscribers; Shemaroo Bhakti ~12M; Sanskar TV ~10M; Bageshwar Dham ~8M; Aniruddhacharya ~14M — platform-native and ad-monetised, impossible to out-scale as a standalone app.</dd>
+        <dt>Still-open</dt><dd>Vernacular short-form vertical apps, premium ad-free scripture/stotra with audio, creator-monetisation tools for kathakars.</dd>
+      </dl>
+    </div>
+  </div>
+</section>
+
+</body>
+</html>
